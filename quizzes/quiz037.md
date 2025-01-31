@@ -123,3 +123,8 @@ tictactoe().run()
 
 ![image](https://github.com/user-attachments/assets/a1dbf4db-53ae-4bd8-ba57-39557e6d9ac6)
 
+## Doagram
+
+![image](https://github.com/user-attachments/assets/6dff5f6c-8af2-4234-8005-3df9046b3754)
+
+
