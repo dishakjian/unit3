@@ -71,3 +71,8 @@ print(flight2.show_flight())
 
 ![image](https://github.com/user-attachments/assets/996714e3-d6bc-4814-b9d8-9b2867d43de0)
 
+## Diagram
+
+![image](https://github.com/user-attachments/assets/72fb1565-fe9a-48ad-8d2e-9939095e603a)
+
+
