@@ -47,3 +47,8 @@ test1.greet()
 
 ![image](https://github.com/user-attachments/assets/8ddd40cc-c7cc-41f7-b66d-9c830a449801)
 
+
+## Diagram
+
+![image](https://github.com/user-attachments/assets/24f50b25-5670-443e-93b1-8f0326af4cf2)
+
