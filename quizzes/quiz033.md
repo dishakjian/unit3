@@ -25,3 +25,8 @@ print(f'16 Years: {TestCase.calculate(16)}')
 ## Proof Code Works
 
 ![image](https://github.com/user-attachments/assets/1eb3377b-e988-435c-b9fd-9a98566c2c09)
+
+
+## Diagram
+
+![image](https://github.com/user-attachments/assets/a781f0f3-a895-44e2-854d-44f0f3d1feb9)
