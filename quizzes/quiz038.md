@@ -53,3 +53,7 @@ ScreenManager:
 ## Proof Code Works
 ![Screenshot 2025-01-31 094421](https://github.com/user-attachments/assets/0acac101-3b98-4cd6-befa-3e0d22e2d028)
 ![Screenshot 2025-01-31 094427](https://github.com/user-attachments/assets/6ade9f67-8dd0-4a2c-808e-0e93a9474556)
+
+
+## UML Diagram
+![image](https://github.com/user-attachments/assets/ca4f6581-3cca-4313-97a7-72eb6393a401)
