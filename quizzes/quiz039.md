@@ -34,3 +34,8 @@ print("average word length is", out)
 ## Proof Code Works
 
 ![image](https://github.com/user-attachments/assets/b69a9088-9a5a-4cf2-bee3-a9ed7c538d4f)
+
+
+## ER Diagram
+![image](https://github.com/user-attachments/assets/39847fbe-8cf8-4b2d-baef-cfdf3cfdb298)
+
