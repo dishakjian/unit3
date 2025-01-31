@@ -125,6 +125,6 @@ tictactoe().run()
 
 ## Doagram
 
-![image](https://github.com/user-attachments/assets/6dff5f6c-8af2-4234-8005-3df9046b3754)
+![image](https://github.com/user-attachments/assets/ba6f224d-83b9-44c9-93b7-71f1d00cd8d6)
 
 
