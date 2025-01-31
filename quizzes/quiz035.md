@@ -36,3 +36,9 @@ print(f"Name: {test2.get_name()}, Age: {test2.get_age()}, Grade: {test2.get_grad
 ## Proof Code Works
 
 ![image](https://github.com/user-attachments/assets/76bb12a6-e992-4799-9dbe-9af0cd59f3a5)
+
+
+## Diagram
+
+![image](https://github.com/user-attachments/assets/ee3e7485-a4da-4ffa-8c63-40cb2b07b83d)
+
