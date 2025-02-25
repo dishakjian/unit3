@@ -1,4 +1,8 @@
 ## Paper Solution
+
+![photo_2025-02-25_13-07-37](https://github.com/user-attachments/assets/b0b59663-0153-4175-9742-bed47d13c3cb)
+
+
 ## Code
 ```.py
 class CalorieCount:
