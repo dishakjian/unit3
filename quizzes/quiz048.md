@@ -1,4 +1,3 @@
-## Paper Solution
 ## Code
 ```.py
 class Book:
