@@ -1,4 +1,5 @@
 ## Paper Solution
+![photo_2025-02-25_13-07-40](https://github.com/user-attachments/assets/d18b5b73-bc6b-4ab0-bf22-ddee330157d8)
 
 
 ## Code
