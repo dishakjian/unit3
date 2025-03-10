@@ -1,16 +1,24 @@
-# Criteria A
-## Problem Definition
+# Criterion A
+## Problem definition
+
 Ms U, a food influencer, relies on honest and high-quality reviews to guide her audience. She is frustrated by unreliable ratings, fake reviews, and a lack of personalization in current food critique platforms. Many platforms allow users to rate restaurants without proof of visit, making it easy for trolls, bots, and competitors to manipulate ratings, ultimately reducing credibility. Additionally, current food rating platforms fail to consider individual taste preferences when recommending restaurants or dishes, leading to irrelevant suggestions that do not align with a user's culinary interests. On top of that, limited sorting options prevent users from filtering restaurants based on specific needs such as price range, culinary interests, popularity, or dietary restrictions, restricting their ability to find the best dining experiences efficiently. Another major issue is that users who take the time to write detailed and thoughtful reviews receive little to no recognition, discouraging engagement and lowering the overall quality of contributions.
+
 As a food influencer, Ms. U frequently collaborates with restaurants and producers, gaining insight into their operational challenges. Restaurants rely on customer feedback to refine their offerings, yet they often struggle to extract meaningful insights from unstructured or misleading reviews. Without a way to engage with credible critiques, they face difficulty in addressing genuine concerns while filtering out bad-faith criticism. Meanwhile, food producers play a crucial role in maintaining quality and sustainability in the industry, but their lack of involvement in existing review ecosystems makes it hard for them to adapt to restaurant demands. Ms. U sees how these gaps in communication and credibility negatively impact both businesses and consumers, reinforcing the need for a more interconnected and transparent system that benefits the entire food industry.
 
 ## Proposed solution
 
 I chose to develop a desktop application over a website for its stability, performance, and security. Unlike web applications, which require constant internet connectivity and can suffer from network latency, and depends on a server, a desktop app processes data locally, handles large datasets, reducing wait times and improving user experience. It also provides enhanced security by enforcing stricter access controls and local encryption, avoiding vulnerabilities like cross-site scripting and SQL injection.
+
 I chose Python for GUI development due to its readability and cross platform compatibility, making understanding and future modifications easier for stakeholders. It is also lightweight compared to lower-level languages like C++, ensuring efficiency without unnecessary complexity. 
-I chose KivyMD because it provides a modern, visually appealing, and user-friendly interface based on Google’s Material Design. It ensures a smooth and consistent experience across devices, making navigation intuitive and interactions seamless. Unlike Tkinter, which has a basic and outdated appearance, KivyMD offers a polished and engaging design that enhances usability.
-I chose SQLite for data storage because it is lightweight, serverless, and cost-effective while efficiently handling structured data like user reviews and restaurant details. Unlike MySQL or PostgreSQL, which require a dedicated server and maintenance, SQLite operates locally with minimal setup, making it ideal for a fast and seamless user experience.
 
-## Success Criteria
+I chose KivyMD because it provides a modern, visually appealing, and user-friendly interface based on Google’s Material Design. It ensures a smooth and consistent experience across devices, making navigation intuitive and interactions seamless. Unlike **Tkinter**, which has a basic and outdated appearance, KivyMD offers a polished and engaging design that enhances usability.
 
-[success criteria (1).pdf](https://github.com/user-attachments/files/18965512/success.criteria.1.pdf)
+I chose SQLite for data storage because it is lightweight, serverless, and cost-effective while efficiently handling structured data like user reviews and restaurant details. Unlike **MySQL** or **PostgreSQL**, which require a dedicated server and maintenance, SQLite operates locally with minimal setup, making it ideal for a fast and seamless user experience.
 
+## Success criteria
+[success criteria (1).pdf](https://github.com/user-attachments/files/19154607/success.criteria.1.pdf)
+See evidence of approval in Appendix
+
+# Appendix
+Fig. 1, email to the client
+Fig. 2, email from the client with approval
