@@ -17,7 +17,16 @@ I chose SQLite for data storage because it is lightweight, serverless, and cost-
 
 ## Success criteria
 [success criteria (1).pdf](https://github.com/user-attachments/files/19154607/success.criteria.1.pdf)
-See evidence of approval in Appendix
+
+**EVIDENCE OF APPROVAL
+**
+![Screenshot 2025-03-11 005110](https://github.com/user-attachments/assets/c7657994-372c-42a0-bc80-05d5938cf052)
+
+Fig. 1, email to the client
+
+![Screenshot 2025-03-11 004911](https://github.com/user-attachments/assets/0eb28cb8-bd64-4a2c-b12c-f990edafd543)
+
+Fig. 2, email from the client with approval
 
 ## Record of Tasks
 | Task No | Planned Action | Planned Outcome | Time Estimate (min) | Target Completion Date | Criteria |
@@ -53,8 +62,3 @@ See evidence of approval in Appendix
 | 29 | Run final tests | Ensure all changes did not break functionality | 30 | Mar 10 | C |
 | 30 | Film video | A video detailing the program while following the test plan | 30 | Mar 11 | D |
 | 31 | Final adjustments and documentation | Ensure project is well-documented | 60 | Mar 11 | A/B/C/D |
-
-
-# Appendix
-Fig. 1, email to the client
-Fig. 2, email from the client with approval
