@@ -19,6 +19,42 @@ I chose SQLite for data storage because it is lightweight, serverless, and cost-
 [success criteria (1).pdf](https://github.com/user-attachments/files/19154607/success.criteria.1.pdf)
 See evidence of approval in Appendix
 
+## Record of Tasks
+| Task No | Planned Action | Planned Outcome | Time Estimate (min) | Target Completion Date | Criteria |
+|---------|---------------|-----------------|--------------------|----------------------|----------|
+| 1 | Consultation with client | Interview client, take notes, and define the problem | 30 | Jan 30 | A |
+| 2 | Rejected proposal from client, suggested improvements | Adjust project direction based on client feedback | - | Jan 30 | A |
+| 3 | Accepted new client proposal | Finalize new project scope | - | Jan 31 | A |
+| 4 | Write problem definition | Based on consultation notes, finalize a description of the problem. | 30 | Jan 31 | A |
+| 5 | Write proposed solution | Finalize the success criteria and form a proposed solution to justify the methods that will be used. | 40 | Feb 1 | A |
+| 6 | Write success criteria | Create success criteria and get approval from the client | 40 | Feb 1 | A |
+| 7 | Research on the best way to create a GUI application and videos about the program I will be using | A clear understanding of the best way to create a GUI application | 120 | Feb 1 | A |
+| 8 | Research on the best way to create a database | A clear understanding of the best way to create a database | 60 | Feb 1 | A |
+| 9 | Edit success criteria | Edit success criteria based off newly gained knowledge, expectations, and predictions | 20 | Feb 1 | A |
+| 10 | Send success criteria | Share proposed success criteria with client | - | Feb 1 | A |
+| 11 | Approve success criteria | Receive client approval | - | Feb 4 | A |
+| 12 | Set up the database | A database that is ready to be used | 90 | Feb 20 | C |
+| 13 | Create basic screens and link them | Build structure of application | 60 | Feb 22 | C/D |
+| 14 | Create welcome screen and login/signup screens | Allow user (role-based access) authentication via database | 60 | Feb 24 | C/D |
+| 15 | Create home screen for each role | Enable navigation through the application | 240 | Feb 28 | C |
+| 16 | Create extra screens for each role | Allow admin to manage employees | 180 | Mar 3 | C/D |
+| 17 | Modify database, add sample data | More tables and relevant columns, sample data for each to test and add information | 90 | Mar 5 | C/D |
+| 18 | Run tests | Identify and fix screen management, widgets, and connection issues | 60 | Mar 5 | B/C/D |
+| 19 | Change KivyMD version for better UI/UX and functionality | Ensure better design and functionality | 240 | Mar 6 | C/D |
+| 20 | Run tests | Identify and fix functionality and compatibility issues | 60 | Mar 6 | B/C/D |
+| 21 | Create wireframe | Plan the frontend structure of the application | 120 | Mar 8 | B |
+| 22 | Create ER diagram | Understand the structure of the database needed | 90 | Mar 8 | B |
+| 23 | Create UML diagram | Understand the classes needed for the final application | 30 | Mar 8 | B |
+| 24 | Create system diagram | Plan the deployment of the final application | 60 | Mar 8 | B |
+| 25 | Create test plan | Establish a test strategy for verification | 15 | Mar 9 | B |
+| 26 | Run full tests | Identify and fix functionality issues | 20 | Mar 9 | B/C/D |
+| 27 | Documentation | Documenting existing tools and sources used for developing the program | 180 | Mar 10 | C |
+| 28 | Adjust and finalize UI | Improve user-friendliness and aesthetics | 90 | Mar 10 | C/D |
+| 29 | Run final tests | Ensure all changes did not break functionality | 30 | Mar 10 | C |
+| 30 | Film video | A video detailing the program while following the test plan | 30 | Mar 11 | D |
+| 31 | Final adjustments and documentation | Ensure project is well-documented | 60 | Mar 11 | A/B/C/D |
+
+
 # Appendix
 Fig. 1, email to the client
 Fig. 2, email from the client with approval
