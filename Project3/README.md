@@ -38,6 +38,18 @@ Fig. 2, email from the client with approval
 
 Fig. 3, solution's hardware and software components and interactions
 
+## Wireframe diagram
+
+## UML Diagram
+
+## ER Diagram
+
+## Flow Diagrams
+
+
+
+
+
 ## Data Storage
 Tables in my SQL file
 
@@ -50,9 +62,6 @@ Extract from one of the tables
 ![image](https://github.com/user-attachments/assets/a5942406-d282-4f77-b341-3abe98fe928e)
 
 Fig. , extract showing an example of how data is stored
-
-# Criterion C
-
 
 ## Record of Tasks
 | Task No | Planned Action | Planned Outcome | Time Estimate (min) | Target Completion Date | Criteria |
@@ -89,6 +98,11 @@ Fig. , extract showing an example of how data is stored
 | 30 | Film video | A video detailing the program while following the test plan | 30 | Mar 11 | D |
 | 31 | Final adjustments and documentation | Ensure project is well-documented | 60 | Mar 11 | A/B/C/D |
 
+## Test Plan
+
+
+
+# Criterion C
 
 
 ## Appendix
