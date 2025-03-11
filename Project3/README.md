@@ -34,6 +34,7 @@ Fig. 2, email from the client with approval
 
 # Criterion B
 ## Systems Diagram
+![systemdiagramp3](https://github.com/user-attachments/assets/8d04a37c-fdb2-499a-8d6e-a81207d536f9)
 
 Fig. 3, solution's hardware and software components and interactions
 
