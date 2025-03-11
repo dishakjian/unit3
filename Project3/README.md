@@ -53,7 +53,7 @@ Fig. 3, solution's hardware and software components and interactions
 ## Data Storage
 Tables in my SQL file
 
-![image](https://github.com/user-attachments/assets/c906aaa9-8ff0-43e2-aff8-ef04830c8125)
+
 
 Fig. , 8 tables in database (2 default)
 
