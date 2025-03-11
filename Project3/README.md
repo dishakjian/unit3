@@ -39,11 +39,13 @@ Fig. 3, solution's hardware and software components and interactions
 
 ## Data Storage
 Tables in my SQL file
+
 ![image](https://github.com/user-attachments/assets/c906aaa9-8ff0-43e2-aff8-ef04830c8125)
 
 Fig. , 8 tables in database (2 default)
 
 Extract from one of the tables
+
 ![image](https://github.com/user-attachments/assets/a5942406-d282-4f77-b341-3abe98fe928e)
 
 Fig. , extract showing an example of how data is stored
@@ -90,8 +92,11 @@ Fig. , extract showing an example of how data is stored
 
 ## Appendix
 Evidence of Consultation with Client:
+
 ![image](https://github.com/user-attachments/assets/f2383c4f-99c1-4078-92ec-1bfda717c592)
 Evidence of Confirmation of Success Criteria
+
 ![Screenshot 2025-03-11 005110](https://github.com/user-attachments/assets/57aec91a-5865-4cde-ad05-7be885a57c4c)
+
 ![Screenshot 2025-03-11 004911](https://github.com/user-attachments/assets/17fd3da9-480e-4575-81ad-a20f672749e2)
 
