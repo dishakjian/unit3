@@ -1,25 +1,29 @@
-# Criterion A
+![image](https://github.com/user-attachments/assets/19ee74c1-5d3d-42dd-94d9-37852e2fc100)# Criterion A
 ## Problem definition
 
 Ms U, a food influencer, relies on honest and high-quality reviews to guide her audience. She is frustrated by unreliable ratings, fake reviews, and a lack of personalization in current food critique platforms. Many platforms allow users to rate restaurants without proof of visit, making it easy for trolls, bots, and competitors to manipulate ratings, ultimately reducing credibility. Additionally, current food rating platforms fail to consider individual taste preferences when recommending restaurants or dishes, leading to irrelevant suggestions that do not align with a user's culinary interests. On top of that, limited sorting options prevent users from filtering restaurants based on specific needs such as price range, culinary interests, popularity, or dietary restrictions, restricting their ability to find the best dining experiences efficiently. Another major issue is that users who take the time to write detailed and thoughtful reviews receive little to no recognition, discouraging engagement and lowering the overall quality of contributions.
 
 As a food influencer, Ms. U frequently collaborates with restaurants and producers, gaining insight into their operational challenges. Restaurants rely on customer feedback to refine their offerings, yet they often struggle to extract meaningful insights from unstructured or misleading reviews. Without a way to engage with credible critiques, they face difficulty in addressing genuine concerns while filtering out bad-faith criticism. Meanwhile, food producers play a crucial role in maintaining quality and sustainability in the industry, but their lack of involvement in existing review ecosystems makes it hard for them to adapt to restaurant demands. Ms. U sees how these gaps in communication and credibility negatively impact both businesses and consumers, reinforcing the need for a more interconnected and transparent system that benefits the entire food industry.
 
+(See evidence of Consultation in Appendix)
+
 ## Proposed solution
 
-I chose to develop a desktop application over a website for its stability, performance, and security. Unlike web applications, which require constant internet connectivity and can suffer from network latency, and depends on a server, a desktop app processes data locally, handles large datasets, reducing wait times and improving user experience. It also provides enhanced security by enforcing stricter access controls and local encryption, avoiding vulnerabilities like cross-site scripting and SQL injection.
+I chose to develop a desktop application over a website for its stability, performance, and security. Unlike web applications, which require constant internet connectivity and can suffer from network latency, and depends on a server, a desktop app processes data locally, handles large datasets, reducing wait times and improving user experience [[1]](https://www.ifourtechnolab.com/blog/web-app-vs-desktop-app#:~:text=Desktop%20apps%20usually%20offer%20better,you%20prioritize%20speed%20or%20convenience.) [[2]](https://builtbright.io/en/magazine/web-vs-desktop-applications-pros-and-cons/). It also provides enhanced security by enforcing stricter access controls and local encryption, avoiding vulnerabilities like cross-site scripting and SQL injection [[3]](https://www.softwareseni.com/identifying-and-assessing-risks-in-web-and-app-development/) [[4]](https://rubygarage.org/blog/risk-management-in-development).
 
-I chose Python for GUI development due to its readability and cross platform compatibility, making understanding and future modifications easier for stakeholders. It is also lightweight compared to lower-level languages like C++, ensuring efficiency without unnecessary complexity. 
+I chose Python for GUI development due to its readability and cross platform compatibility, making understanding and future modifications easier for stakeholders [[5]](https://serokell.io/blog/python-pros-and-cons) [[6]](https://www.geeksforgeeks.org/python-language-advantages-applications/). It is also lightweight compared to lower-level languages like C++ and Java, ensuring efficiency without unnecessary complexity [[7]](https://www.snaplogic.com/glossary/python-vs-java-performance) [[8]](https://lset.uk/blog/unveiling-the-future-of-python-exploring-the-latest-trends-and-innovations-in-2023-and-beyond/) [[9]](https://blog.jetbrains.com/pycharm/2023/10/future-of-data-science/). 
 
-I chose KivyMD because it provides a modern, visually appealing, and user-friendly interface based on Google’s Material Design. It ensures a smooth and consistent experience across devices, making navigation intuitive and interactions seamless. Unlike **Tkinter**, which has a basic and outdated appearance, KivyMD offers a polished and engaging design that enhances usability.
+I chose KivyMD because it provides a modern, visually appealing, and user-friendly interface based on Google’s Material Design [[10]](https://kivymd.readthedocs.io/en/latest/) [[11]](https://m2.material.io/design/introduction/). It ensures a smooth and consistent experience across devices, making navigation intuitive and interactions seamless. Unlike **Tkinter**, which has a basic and outdated appearance, KivyMD offers a polished and engaging design that enhances usability[[11]](https://kivy.org/#home) [[12]](https://medium.com/@qasim.coder/python-gui-smackdown-unleashing-the-power-of-tkinter-pyqt-and-kivy-e7b05d0e862).
 
-I chose SQLite for data storage because it is lightweight, serverless, and cost-effective while efficiently handling structured data like user reviews and restaurant details. Unlike **MySQL** or **PostgreSQL**, which require a dedicated server and maintenance, SQLite operates locally with minimal setup, making it ideal for a fast and seamless user experience.
+I chose SQLite for data storage because it is lightweight, serverless, and cost-effective while efficiently handling structured data like user reviews and restaurant details [[13]](https://www.sqlite.org/whentouse.html) [[14]](https://www.epicweb.dev/why-you-should-probably-be-using-sqlite) [[15]](https://www.sqlite.org/aff_short.html). Unlike **MySQL** or **PostgreSQL**, which require a dedicated server and maintenance, SQLite operates locally with minimal setup, making it ideal for a fast and seamless user experience [[16]](https://www.greengeeks.com/blog/sqlite-vs-mysql/#:~:text=Ultimately%2C%20SQLite%20is%20a%20lightweight,go%2Dto%20for%20RDBMS%20solutions.).
 
 ## Success criteria
 [success criteria (1).pdf](https://github.com/user-attachments/files/19154607/success.criteria.1.pdf)
 
 **EVIDENCE OF APPROVAL
 **
+(Also included in Appendix)
+
 ![Screenshot 2025-03-11 005110](https://github.com/user-attachments/assets/c7657994-372c-42a0-bc80-05d5938cf052)
 
 Fig. 1, email to the client
@@ -27,6 +31,25 @@ Fig. 1, email to the client
 ![Screenshot 2025-03-11 004911](https://github.com/user-attachments/assets/0eb28cb8-bd64-4a2c-b12c-f990edafd543)
 
 Fig. 2, email from the client with approval
+
+# Criterion B
+## Systems Diagram
+
+Fig. 3, solution's hardware and software components and interactions
+
+## Data Storage
+Tables in my SQL file
+![image](https://github.com/user-attachments/assets/c906aaa9-8ff0-43e2-aff8-ef04830c8125)
+
+Fig. , 8 tables in database (2 default)
+
+Extract from one of the tables
+![image](https://github.com/user-attachments/assets/a5942406-d282-4f77-b341-3abe98fe928e)
+
+Fig. , extract showing an example of how data is stored
+
+# Criterion C
+
 
 ## Record of Tasks
 | Task No | Planned Action | Planned Outcome | Time Estimate (min) | Target Completion Date | Criteria |
@@ -62,3 +85,13 @@ Fig. 2, email from the client with approval
 | 29 | Run final tests | Ensure all changes did not break functionality | 30 | Mar 10 | C |
 | 30 | Film video | A video detailing the program while following the test plan | 30 | Mar 11 | D |
 | 31 | Final adjustments and documentation | Ensure project is well-documented | 60 | Mar 11 | A/B/C/D |
+
+
+
+## Appendix
+Evidence of Consultation with Client:
+![image](https://github.com/user-attachments/assets/f2383c4f-99c1-4078-92ec-1bfda717c592)
+Evidence of Confirmation of Success Criteria
+![Screenshot 2025-03-11 005110](https://github.com/user-attachments/assets/57aec91a-5865-4cde-ad05-7be885a57c4c)
+![Screenshot 2025-03-11 004911](https://github.com/user-attachments/assets/17fd3da9-480e-4575-81ad-a20f672749e2)
+
