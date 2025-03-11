@@ -18,7 +18,7 @@ I chose KivyMD because it provides a modern, visually appealing, and user-friend
 I chose SQLite for data storage because it is lightweight, serverless, and cost-effective while efficiently handling structured data like user reviews and restaurant details [[13]](https://www.sqlite.org/whentouse.html) [[14]](https://www.epicweb.dev/why-you-should-probably-be-using-sqlite) [[15]](https://www.sqlite.org/aff_short.html). Unlike **MySQL** or **PostgreSQL**, which require a dedicated server and maintenance, SQLite operates locally with minimal setup, making it ideal for a fast and seamless user experience [[16]](https://www.greengeeks.com/blog/sqlite-vs-mysql/#:~:text=Ultimately%2C%20SQLite%20is%20a%20lightweight,go%2Dto%20for%20RDBMS%20solutions.).
 
 ## Success criteria
-[success criteria (1).pdf](https://github.com/user-attachments/files/19154607/success.criteria.1.pdf)
+[success criteria (2).pdf](https://github.com/user-attachments/files/19197099/success.criteria.2.pdf)
 
 **EVIDENCE OF APPROVAL
 **
@@ -53,13 +53,13 @@ Fig. 3, solution's hardware and software components and interactions
 ## Data Storage
 Tables in my SQL file
 
+![image](https://github.com/user-attachments/assets/f0731882-50ea-4bf9-8e53-532d343266fe)
 
-
-Fig. , 8 tables in database (2 default)
+Fig. , 10 tables in database (2 default)
 
 Extract from one of the tables
 
-![image](https://github.com/user-attachments/assets/a5942406-d282-4f77-b341-3abe98fe928e)
+![image](https://github.com/user-attachments/assets/30ed05a6-ceb2-48a9-93c6-4bfd5aa87445)
 
 Fig. , extract showing an example of how data is stored
 
@@ -99,6 +99,13 @@ Fig. , extract showing an example of how data is stored
 | 31 | Final adjustments and documentation | Ensure project is well-documented | 60 | Mar 11 | A/B/C/D |
 
 ## Test Plan
+
+| **Success Criteria**                     | **Description**                                                                 | **Test Procedure**                                                                                                                                                                                                 | **Expected Outcome**                                                                                   |
+|------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| 1. Secure Multi-role login system| A secure authentication system will be implemented to ensure that users, restaurants, moderators, and producers have different access levels and functionalities. Each user type will have role-based access, ensuring secure data handling and preventing unauthorized actions.| 1. Run project.py 2. Find and check the terms and conditions box 3. Find and click SIGN UP button 4. Click on respective text box and enter a unique username (eg. Bob), valid email (eg. bob@hotmail.com), and a password at least 8 letters (eg. 12345678), then that same password again in confirm password (eg. 12345678) 5. Find DropDown menu and select a role (eg. User). 6. Find and click "Sign up". 7. Click on respective text box and enter the same details as in Sign up (eg. Bob for username, 12345678 for password) 8. Find DropDown menu and select the same role as in Sign up (eg. User) 9. Find and click Log in| User is registered, and the database stores the hashed password. Redirects to the login. Redirects to home screen. |
+| 2. Personalization | The platform will predict whether a user will enjoy a dish based on their taste profile and past reviews, improving recommendation accuracy and ensuring that feedback is relevant to the user’s preferences. | 1. Run project.py 2. Find and check the terms and conditions box. 3. Find and click LOG IN button. 4. Find and click respective text boxes to enter the folllowing information (past reviews and taste profile is needed for recommendation) Username: 1, Password: 12345678 5. Find and click LOG IN button 6. Find and click DropDown filters next to the search bar on the top of the screen. 7. Select rating 8. See restaurants and ranking 9. Find and click Dropdown filters again 10. Select recommended 11. See difference in restaurants and ranking. | Ranking based on user's previous reviews and taste profile from those reviews.|
+| 3. Moderation | An automated system with a blacklist will flag inappropriate reviews containing offensive language, spam, or misleading content, for the moderators to review and delete if necessary. | 1. Complete steps 1-9 from test 1 or 1-4 from test 2 (Username: Bob, Password: 12345678) if steps 1-9 from test 1 have already been tested 2. Find and select view details button of any restaurant (eg. Burger King). 3. Find and click dropdown dishes, select any (eg. Whopper) 4. Click on Rating text box, type a rating (eg. 2). 5. Click on Comment text box, type an inappropriate comment including swear words (eg. "Tastes like shit"). 6. Find and click Submit Review button. 7. Read Pop up dialogue. 8. Find and click back arrow button. 9. Find and click logout button. 10. Click on username text box and type "mod1" 11. Click on password text box and type "12345678". 12. Find and click LOG IN button. 13. Scroll down screen. 14. Find newly flagged review at the bottom. 15. Find and click delete button. | Review is not published, flagged, and sent to moderators for review. Moderator can view the flagged review and approve or delete it. |
+| 4. Review Management | Users can leave reviews for restaurants including dish name, rating, and comment. Restaurant owners can view categorized reviews for their restaurant. | 1. Complete steps 1-3 from test 3. 4. Click on Rating text box, type a rating (eg. 5). 5. Click on comment text box, type a comment (eg. "I really enjoyed the meal and atmosphere"). 6. Find and click Submit Review button. 7. Scroll down in Reviews box, and find newly added review. 8. Complete steps 8-9 from test 3. 10. Click on username text box and type "BurgerKing"
 
 
 
