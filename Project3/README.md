@@ -74,29 +74,34 @@ Fig. 7, flow diagram for try_login
 
 ## Wireframe diagram
 
+![Blank diagram (10)](https://github.com/user-attachments/assets/21530be2-fc6f-4269-bdee-c80ff421f384)
 
+Fig. 8, wireframe diagram for screen management and buttons
 
 ## UML Diagram
 
+![diagram1](https://github.com/user-attachments/assets/88127390-aa9b-47ba-ba82-cffc0040b63c)
 
+Fig. 9, UML Diagram for project
 
 ## ER Diagram
 
+![Blank diagram (9)](https://github.com/user-attachments/assets/8c54568c-473e-40dd-a91f-f2a04d282189)
 
-
+Fig. 10, detailing entity-relationships showing how entities relate to each other within the project system.
 
 ## Data Storage
 Tables in my SQL file
 
 ![image](https://github.com/user-attachments/assets/f0731882-50ea-4bf9-8e53-532d343266fe)
 
-Fig. , 10 tables in database (2 default)
+Fig. 11, 10 tables in database (2 default)
 
 Extract from one of the tables
 
 ![image](https://github.com/user-attachments/assets/30ed05a6-ceb2-48a9-93c6-4bfd5aa87445)
 
-Fig. , extract showing an example of how data is stored
+Fig. 12, extract showing an example of how data is stored
 
 ## Record of Tasks
 | Task No | Planned Action | Planned Outcome | Time Estimate (min) | Target Completion Date | Criteria |
