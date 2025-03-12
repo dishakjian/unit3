@@ -151,6 +151,698 @@ Fig. 12, extract showing an example of how data is stored
 
 # Criterion C
 
+## LIST OF TECHNIQUES
+# Techniques Used in the Code
+
+---
+
+### 1. Database Management Techniques
+- CRUD Operations
+- Database Normalization
+- Foreign Key Relationships
+- Transaction Management
+- Query Optimization
+
+---
+
+### 2. User Authentication and Authorization
+- Password Hashing
+- Role-Based Access Control (RBAC)
+- Session Management
+
+---
+
+### 3. Data Filtering and Sorting
+- Dynamic Filtering
+- Custom Sorting Algorithms
+- Search Functionality
+
+---
+
+### 4. Personalization and Recommendation Systems
+- Taste Profiling
+- Recommendation Scoring
+- Dynamic UI Updates
+
+---
+
+### 5. Error Handling and Validation
+- Input Validation
+- Inappropriate Content Detection
+- Error Popups
+- Exception Handling
+
+---
+
+### 6. Moderation and Flagging Systems
+- Flagging Mechanism
+- Approval/Rejection Workflow
+- Audit Trail
+
+---
+
+### 7. UI/UX Design Techniques
+- Dynamic Card Creation
+- Interactive Widgets
+- Progress Indicators
+- Popup Dialogs
+
+---
+
+### 8. Data Aggregation and Reporting
+
+---
+
+### 9. Algorithm Design
+- Weighted Scoring
+- Randomization
+- Sorting Algorithms
+
+---
+
+### 10. Security Techniques
+- Data Sanitization
+- Input Sanitization
+- Role-Based Permissions
+
+---
+
+### 11. Code Organization and Modularity
+- Reusable Components
+- Comments and Organization
+- Database Abstraction
+
+---
+
+### 12. Testing and Debugging Techniques
+- Debugging Statements
+- Error Logging
+- Input Validation Testing
+
+---
+
+### 13. User Feedback and Interaction
+- Like/Dislike System
+- Review Moderation Feedback
+- Progress Tracking
+
+---
+
+### 14. Data Visualization
+
+---
+
+### 15. Event-Driven Programming
+- Button Click Handling
+- Screen Transition Handling
+- Dynamic UI Updates
+
+---
+
+### 16. Data Persistence
+- Local Database Storage
+- Session Persistence
+
+
+## Filter Restaurants function
+This function is responsible for filtering and sorting restaurants based on user preferences and displaying them in a user-friendly format. It handles three main filtering options: Price, Rating, and Recommended. The Recommended filter uses the user's taste profile to calculate a personalized recommendation score for each restaurant. Additionally, it supports a search query to filter restaurants by name or description.
+
+```.py
+def filter_restaurants(self):
+    # I start by retrieving the filter type selected by the user from the filter_spinner widget.
+    filter_type = self.ids.filter_spinner.text
+
+    # I also get the search query entered by the user from the search_input widget and convert it to lowercase for case-insensitive matching.
+    search_query = self.ids.search_input.text.lower()
+
+    # I open a connection to the SQLite database using the DatabaseManager class to fetch restaurant data.
+    db = DatabaseManager('project.sql')
+
+    # I define a SQL query to select all restaurants' details: id, name, description, rating, price, and photo.
+    query = "SELECT id, name, description, rating, price, photo FROM restaurants"
+
+    # I execute the query and store the results in the `restaurants` variable, which will contain a list of tuples.
+    restaurants = db.search(query)
+
+    # I close the database connection to free up resources and avoid potential memory leaks.
+    db.close()
+
+    # I print the number of restaurants found to the console for debugging purposes.
+    print(f"Found {len(restaurants)} restaurants.")
+
+    # I clear the existing restaurant cards from the restaurant_list widget to prepare for displaying the filtered results.
+    self.ids.restaurant_list.clear_widgets()
+
+    # I check the filter type selected by the user to determine how to sort the restaurants.
+    if filter_type == 'Price':
+        # If the filter type is 'Price', I sort the restaurants by their price. 
+        # The price is represented by the number of '¥' symbols in the 4th index of the tuple.
+        # If the price is None, I default it to 0 to avoid errors during sorting.
+        restaurants.sort(key=lambda x: x[4] if x[4] is not None else 0)
+    elif filter_type == 'Rating':
+        # If the filter type is 'Rating', I sort the restaurants by their rating.
+        # The rating is in the 3rd index of the tuple. If it's None, I default it to 0.
+        # I sort in descending order (reverse=True) so higher-rated restaurants appear first.
+        restaurants.sort(key=lambda x: x[3] if x[3] is not None else 0, reverse=True)
+    elif filter_type == 'Recommended':
+        # If the filter type is 'Recommended', I need to calculate a recommendation score for each restaurant based on the user's taste profile.
+        # I reopen the database connection to fetch the user's taste profile.
+        db = DatabaseManager('project.sql')
+
+        # I query the database to get the user's ID using their username stored in LoginScreen.current_username.
+        user_id = db.search("SELECT id FROM users WHERE username = ?", (LoginScreen.current_username,))[0][0]
+
+        # I fetch the user's taste profile (sweet, salty, sour, bitter, umami) from the user_taste_profiles table.
+        user_taste_profile = db.search(
+            "SELECT sweet, salty, sour, bitter, umami FROM user_taste_profiles WHERE user_id = ?",
+            (user_id,))
+        
+        # I close the database connection after fetching the data.
+        db.close()
+
+        # If the user has a taste profile, I proceed to calculate recommendation scores for each restaurant.
+        if user_taste_profile:
+            # I unpack the taste profile values into individual variables for easier calculation.
+            user_sweet, user_salty, user_sour, user_bitter, user_umami = user_taste_profile[0]
+
+            # I iterate over each restaurant to calculate its recommendation score.
+            for i, restaurant in enumerate(restaurants):
+                # I get the restaurant's ID from the first element of the tuple.
+                restaurant_id = restaurant[0]
+
+                # I calculate the restaurant's taste profile by calling the `calculate_restaurant_taste_profile` method.
+                restaurant_taste_profile = self.calculate_restaurant_taste_profile(restaurant_id)
+
+                # If the restaurant has no taste profile, I append a default score of 0.0 and skip further calculations.
+                if not restaurant_taste_profile:
+                    # I convert the tuple to a list to append the score, then convert it back to a tuple.
+                    restaurant = list(restaurant)
+                    restaurant.append(0.0)
+                    restaurants[i] = tuple(restaurant)
+                    continue
+
+                # I calculate the recommendation score by multiplying the user's taste preferences with the restaurant's taste profile.
+                recommendation_score = (
+                        user_sweet * restaurant_taste_profile["sweet"] +
+                        user_salty * restaurant_taste_profile["salty"] +
+                        user_sour * restaurant_taste_profile["sour"] +
+                        user_bitter * restaurant_taste_profile["bitter"] +
+                        user_umami * restaurant_taste_profile["umami"]
+                )
+
+                # I append the recommendation score to the restaurant tuple by converting it to a list, appending the score, and converting it back to a tuple.
+                restaurant = list(restaurant)
+                restaurant.append(recommendation_score)
+                restaurants[i] = tuple(restaurant)
+
+            # I sort the restaurants by their recommendation score in descending order so the most recommended restaurants appear first.
+            restaurants.sort(key=lambda x: x[-1], reverse=True)
+
+    # I filter the restaurants based on the search query entered by the user.
+    filtered_restaurants = []
+    for restaurant in restaurants:
+        # I unpack the restaurant tuple into individual variables for easier access.
+        restaurant_id, name, description, rating, price, photo, *rest = restaurant
+
+        # I check if the search query is empty or if it matches the restaurant's name or description (case-insensitive).
+        if not search_query or search_query in name.lower() or search_query in description.lower():
+            # If the restaurant matches the search query, I add it to the filtered_restaurants list.
+            filtered_restaurants.append(restaurant)
+
+    # I iterate over the filtered restaurants to create and display a card for each one.
+    for restaurant in filtered_restaurants:
+        # I unpack the restaurant tuple again for clarity.
+        restaurant_id, name, description, rating, price, photo, *rest = restaurant
+
+        # I set a default price of 3 if the price is None.
+        price = price if price is not None else 3
+
+        # I print the restaurant's name to the console for debugging purposes.
+        print(f"Creating card for: {name}")
+
+        # I create a new MDCard widget to display the restaurant's details.
+        card = MDCard(
+            orientation="vertical",
+            size_hint=(1, None),
+            height="180dp",
+            elevation=4,
+            padding=10,
+            spacing=10,
+            md_bg_color=(1, 1, 1, 1))
+
+        # I create a horizontal BoxLayout to hold the restaurant's name, rating, and price.
+        title_box = BoxLayout(orientation='horizontal', size_hint_y=None, height="40dp")
+
+        # I create a Label widget to display the restaurant's name.
+        title_label = Label(
+            text=name,
+            font_size="18sp",
+            bold=True,
+            size_hint_x=0.6,
+            color=(0, 0, 0, 1))
+
+        # I create another horizontal BoxLayout to display the star rating.
+        rating_box = BoxLayout(orientation='horizontal', size_hint_x=0.2, spacing=5)
+
+        # I calculate the number of full stars, half stars, and empty stars based on the restaurant's rating.
+        rating = rating if rating is not None else 0  # Default to 0 if rating is None
+        full_stars = int(rating)
+        half_star = 1 if (rating - full_stars) >= 0.5 else 0
+        empty_stars = 5 - full_stars - half_star
+
+        # I add full star images to the rating_box.
+        for _ in range(full_stars):
+            rating_box.add_widget(Image(source='fullstar.png', size_hint=(None, None), size=(20, 20)))
+
+        # I add a half star image if applicable.
+        if half_star:
+            rating_box.add_widget(Image(source='star-half-icon.png', size_hint=(None, None), size=(20, 20)))
+
+        # I add empty star images to fill the remaining space.
+        for _ in range(empty_stars):
+            rating_box.add_widget(Image(source='emptystar.png', size_hint=(None, None), size=(20, 20)))
+
+        # I create a Label widget to display the restaurant's price.
+        price_label = Label(
+            text=f"¥{'¥' * price}",
+            font_size="16sp",
+            size_hint_x=0.2,
+            color=(0, 0, 0, 1))
+
+        # I add the title_label, rating_box, and price_label to the title_box.
+        title_box.add_widget(title_label)
+        title_box.add_widget(rating_box)
+        title_box.add_widget(price_label)
+
+        # I create a Label widget to display the restaurant's description.
+        description_label = Label(
+            text=description,
+            font_size="14sp",
+            size_hint_y=None,
+            height="60dp",
+            color=(0, 0, 0, 1))
+
+        # I create a Button widget to allow the user to view more details about the restaurant.
+        details_button = Button(
+            text="View Details",
+            size_hint_y=None,
+            height="40dp",
+            on_release=lambda btn, rid=restaurant_id: self.view_restaurant(rid))
+
+        # I add the title_box, description_label, and details_button to the card.
+        card.add_widget(title_box)
+        card.add_widget(description_label)
+        card.add_widget(details_button)
+
+        # I add the card to the restaurant_list widget to display it on the screen.
+        self.ids.restaurant_list.add_widget(card)
+
+        # I print the restaurant's name to the console to confirm the card was added.
+        print(f"Added card for: {name}")
+```
+
+### How It Works - Summary
+
+1. Data Retrieval: The function starts by fetching all restaurants from the database. It then clears the existing UI elements to prepare for displaying the filtered results.
+
+2. Filtering and Sorting:
+- If the user selects Price, the restaurants are sorted by their price (represented by the number of '¥' symbols).
+
+- If the user selects Rating, the restaurants are sorted by their rating in descending order.
+
+- If the user selects Recommended, the function calculates a recommendation score for each restaurant based on the user's taste profile and the restaurant's taste profile. The restaurants are then sorted by this score.
+
+3. Search Query Filtering: After sorting, the function filters the restaurants based on the search query entered by the user. It checks if the query matches the restaurant's name or description (case-insensitive).
+
+4. UI Rendering: For each filtered restaurant, the function creates a card that displays the restaurant's name, rating, price, and description. The card also includes a button to view more details about the restaurant.
+
+5. Dynamic Updates: The function dynamically updates the UI to reflect the filtered and sorted results, ensuring a smooth user experience.
+
+## Calculate Restaurant Taste Profile Function
+This function calculates the taste profile of a restaurant based on the dishes in its reviews. The taste profile is used to provide personalized recommendations to users based on their taste preferences.
+
+```.py
+def calculate_restaurant_taste_profile(self, restaurant_id):
+    """
+    I calculate the taste profile for a restaurant based on the dishes in its reviews.
+    """
+    # I open a connection to the SQLite database using the DatabaseManager class.
+    db = DatabaseManager('project.sql')
+    try:
+        # I define a SQL query to fetch the taste profiles of all dishes associated with the restaurant's reviews.
+        query = """
+        SELECT d.sweet, d.salty, d.sour, d.bitter, d.umami
+        FROM reviews r
+        JOIN dishes d ON r.dish = d.id
+        WHERE r.restaurant_id = ?
+        """
+        # I execute the query and store the results in the `dish_taste_profiles` variable.
+        dish_taste_profiles = db.search(query, (restaurant_id,))
+
+        # If no dishes are found, I return a default taste profile with all values set to 0.
+        if not dish_taste_profiles:
+            return {
+                "sweet": 0,
+                "salty": 0,
+                "sour": 0,
+                "bitter": 0,
+                "umami": 0,
+            }
+
+        # I initialize a dictionary to store the cumulative taste profile.
+        taste_profile = {"sweet": 0, "salty": 0, "sour": 0, "bitter": 0, "umami": 0}
+
+        # I iterate over each dish's taste profile to calculate the cumulative taste profile.
+        for dish in dish_taste_profiles:
+            # I unpack the taste attributes for the current dish.
+            sweet, salty, sour, bitter, umami = dish
+
+            # I add each taste attribute to the cumulative taste profile.
+            taste_profile["sweet"] += sweet
+            taste_profile["salty"] += salty
+            taste_profile["sour"] += sour
+            taste_profile["bitter"] += bitter
+            taste_profile["umami"] += umami
+
+        # I normalize the taste profile by dividing each attribute by the number of dishes.
+        num_dishes = len(dish_taste_profiles)
+        for key in taste_profile:
+            taste_profile[key] /= num_dishes
+
+        # I return the normalized taste profile.
+        return taste_profile
+
+    except Exception as e:
+        # If an error occurs, I print the error message and return a default taste profile.
+        print(f"Error calculating taste profile: {e}")
+        return {
+            "sweet": 0,
+            "salty": 0,
+            "sour": 0,
+            "bitter": 0,
+            "umami": 0,
+        }
+    finally:
+        # I ensure the database connection is closed, even if an error occurs.
+        db.close()
+```
+### How It Works - Summary
+1. Data Retrieval: The function queries the database to fetch the taste profiles of all dishes associated with the restaurant's reviews.
+
+2. Default Handling: If no dishes are found, it returns a default taste profile with all values set to 0.
+
+3. Cumulative Calculation: It iterates over each dish's taste profile and calculates the cumulative taste profile by summing up the taste attributes.
+
+4. Normalization: The cumulative taste profile is normalized by dividing each attribute by the number of dishes.
+
+5. Error Handling: If an error occurs, it prints the error message and returns a default taste profile.
+
+6. Resource Management: The database connection is closed in the finally block to ensure proper resource management.
+
+## Try Login Function
+This function handles user login by validating the username, password, and role entered by the user. It also checks if a restaurant user is approved before allowing access.
+
+```.py
+def try_login(self):
+    # I retrieve the username, password, and role entered by the user from the UI.
+    username = self.ids.uname.text
+    password = self.ids.passwd.text
+    role = self.ids.role_spinner.text
+
+    # I check if the username or password fields are empty.
+    if not username or not password:
+        # If either field is empty, I show an error message and return.
+        self.show_error("Please fill in all fields.")
+        return
+
+    # I define a SQL query to search for the user in the database.
+    search_user = "SELECT id, username, email, password, role, points FROM users WHERE username = ? AND role = ?"
+    # I open a connection to the SQLite database using the DatabaseManager class.
+    db = DatabaseManager('project.sql')
+    # I execute the query and store the result in the `result` variable.
+    result = db.search(search_user, (username, role))
+
+    # I check if exactly one user was found.
+    if len(result) == 1:
+        # I unpack the user's details from the result.
+        user_id, username, email, stored_hash_password, role, points = result[0]
+
+        # I check if the entered password matches the stored hash password.
+        if check_hash(input_str=password, hash=stored_hash_password):
+            # If the password matches, I store the user's ID and username in the LoginScreen class.
+            LoginScreen.current_user = user_id
+            LoginScreen.current_username = username
+
+            # If the user is a restaurant, I check if the restaurant is approved.
+            if role == "Restaurant":
+                # I define a SQL query to fetch the restaurant's approval status.
+                restaurant_query = "SELECT approved FROM restaurants WHERE owner_id = ?"
+                # I execute the query and store the result in the `restaurant_result` variable.
+                restaurant_result = db.search(restaurant_query, (user_id,))
+                # I close the database connection.
+                db.close()
+
+                # If the restaurant is found, I check its approval status.
+                if restaurant_result:
+                    approved = restaurant_result[0][0]
+                    # I redirect the user to the appropriate screen based on the approval status.
+                    self.redirect_to_role_screen(role, approved)
+                else:
+                    # If the restaurant is not found, I show an error message.
+                    self.show_error("Restaurant not found.")
+                    return
+            else:
+                # For non-restaurant roles, I redirect the user directly.
+                self.redirect_to_role_screen(role)
+        else:
+            # If the password does not match, I show an error message.
+            db.close()
+            self.show_error("Username or password incorrect.")
+    else:
+        # If no user is found, I show an error message.
+        db.close()
+        self.show_error("User not found.")
+```
+### How It Works - Summary
+1. Input Validation: The function checks if the username and password fields are filled.
+
+2. Database Query: It queries the database to find a user with the entered username and role.
+
+3. Password Verification: It verifies the entered password against the stored hash password.
+
+4. Role Handling: If the user is a restaurant, it checks if the restaurant is approved before redirecting.
+
+5. Error Handling: It shows appropriate error messages for invalid inputs or database errors.
+
+6. Redirection: It redirects the user to the appropriate screen based on their role and approval status.
+
+## Add Reviews Function
+This function allows users to add a review for a restaurant. It validates the input, checks for inappropriate content, and updates the database.
+```.py
+def add_review(self):
+    # I retrieve the dish, rating, and comment entered by the user from the UI.
+    dish = self.ids.dish_spinner.text
+    rating = self.ids.rating_input.text
+    comment = self.ids.comment_input.text
+
+    # I check if any of the fields are empty.
+    if not dish or not rating or not comment:
+        # If any field is empty, I show an error message and return.
+        self.show_error("Please fill in all fields.")
+        return
+
+    try:
+        # I convert the rating to a float and validate that it is between 1 and 5.
+        rating = float(rating)
+        if rating < 1 or rating > 5:
+            # If the rating is invalid, I show an error message and return.
+            self.show_error("Rating must be between 1 and 5.")
+            return
+    except ValueError:
+        # If the rating is not a number, I show an error message and return.
+        self.show_error("Rating must be a number.")
+        return
+
+    # I check if the comment contains inappropriate content.
+    flagged_reason = self.check_for_inappropriate_content(comment)
+    if flagged_reason:
+        # If the comment is flagged, I show an error message and send the review for moderation.
+        self.show_error(
+            f"Your message was flagged as inappropriate and was sent for review. Reason: {flagged_reason}. TasteTogether is a platform for collaboration, sharing experiences, and improving the food industry. Help us keep our safe space!")
+        self.send_for_review(dish, rating, comment, flagged_reason)
+        return
+
+    # I open a connection to the SQLite database using the DatabaseManager class.
+    db = DatabaseManager('project.sql')
+
+    # I retrieve the current user's ID from the LoginScreen class.
+    user_id = LoginScreen.current_user
+    if not user_id:
+        # If the user ID is not found, I show an error message and return.
+        db.close()
+        self.show_error("User not found. Please log in again.")
+        return
+
+    # I insert the new review into the reviews table.
+    query = "INSERT INTO reviews (restaurant_id, user_id, dish, rating, comment) VALUES (?, ?, ?, ?, ?)"
+    db.execute(query, (self.restaurant_id, user_id, dish, rating, comment))
+
+    # I update the restaurant's rating in the database.
+    self.update_restaurant_rating(self.restaurant_id, rating)
+
+    # I close the database connection.
+    db.close()
+
+    # I clear the input fields to prepare for the next review.
+    self.ids.dish_spinner.text = "Select Dish"
+    self.ids.rating_input.text = ""
+    self.ids.comment_input.text = ""
+
+    # I reload the reviews to reflect the new addition.
+    self.load_restaurant(self.restaurant_id)
+```
+
+### How It Works - Summary
+1. Input Validation: The function checks if all fields are filled and validates the rating.
+
+2. Inappropriate Content Check: It checks if the comment contains inappropriate content and flags it if necessary.
+
+3. Database Insertion: It inserts the new review into the database and updates the restaurant's rating.
+
+4. Error Handling: It shows appropriate error messages for invalid inputs or database errors.
+
+5. UI Update: It clears the input fields and reloads the reviews to reflect the new addition.
+
+## Load Flagged Reviews Function
+This function loads flagged reviews from the database and displays them in the UI for moderators to review. Moderators can either approve or reject flagged reviews.
+```.py
+def load_flagged_reviews(self):
+    # I open a connection to the SQLite database using the DatabaseManager class.
+    db = DatabaseManager('project.sql')
+
+    # I define a SQL query to fetch all flagged reviews along with the username of the user who posted the review.
+    query = """
+    SELECT f.id, f.dish, f.rating, f.comment, f.reason, u.username 
+    FROM flagged_reviews f 
+    JOIN users u ON f.user_id = u.id
+    """
+    # I execute the query and store the results in the `flagged_reviews` variable.
+    flagged_reviews = db.search(query)
+
+    # I close the database connection to free up resources.
+    db.close()
+
+    # I clear the existing flagged reviews from the UI to prepare for displaying the new ones.
+    self.ids.flagged_reviews.clear_widgets()
+
+    # I iterate over each flagged review to create a UI element for it.
+    for review in flagged_reviews:
+        # I unpack the review details from the tuple.
+        review_id, dish, rating, comment, reason, username = review
+
+        # I create a vertical BoxLayout to hold the review details.
+        review_box = BoxLayout(orientation='vertical', size_hint_y=None, height=200)
+
+        # I create a Label widget to display the review details.
+        review_box.add_widget(Label(
+            text=f"User: {username}\nDish: {dish}\nRating: {rating}\nComment: {comment}\nReason: {reason}",
+            color=(0, 0, 0, 1),  # Black color
+            halign='left'  # Align text to the left
+        ))
+
+        # I create an "Approve" button to allow moderators to approve the review.
+        approve_btn = Button(
+            text="Approve",
+            size_hint_y=None,
+            height=30,
+            on_release=lambda btn, rid=review_id: self.approve_review(rid)
+        )
+
+        # I create a "Reject" button to allow moderators to reject the review.
+        reject_btn = Button(
+            text="Reject",
+            size_hint_y=None,
+            height=30,
+            on_release=lambda btn, rid=review_id: self.reject_review(rid)
+        )
+
+        # I add the "Approve" and "Reject" buttons to the review_box.
+        review_box.add_widget(approve_btn)
+        review_box.add_widget(reject_btn)
+
+        # I add the review_box to the flagged_reviews widget to display it on the screen.
+        self.ids.flagged_reviews.add_widget(review_box)
+```
+
+### How It Works
+1. Data Retrieval: The function queries the database to fetch all flagged reviews along with the username of the user who posted the review.
+
+2. UI Clearing: It clears the existing flagged reviews from the UI to prepare for displaying the new ones.
+
+3. UI Rendering: For each flagged review, it creates a BoxLayout to display the review details and adds "Approve" and "Reject" buttons.
+
+4. Button Actions: The buttons are linked to functions that handle the approval or rejection of the review.
+
+5. Resource Management: The database connection is closed after fetching the data.
+
+## Approve Review Function
+```.py
+def approve_review(self, review_id):
+    # I open a connection to the SQLite database using the DatabaseManager class.
+    db = DatabaseManager('project.sql')
+
+    try:
+        # I fetch the restaurant_id associated with the flagged review.
+        restaurant_id = db.search("SELECT restaurant_id FROM flagged_reviews WHERE id = ?", (review_id,))[0][0]
+
+        # I fetch the details of the flagged review.
+        flagged_review = db.search("SELECT user_id, dish, rating, comment FROM flagged_reviews WHERE id = ?", (review_id,))[0]
+
+        # I move the approved review to the general reviews table.
+        db.execute("INSERT INTO reviews (restaurant_id, user_id, dish, rating, comment) VALUES (?, ?, ?, ?, ?)",
+                   (restaurant_id, flagged_review[0], flagged_review[1], flagged_review[2], flagged_review[3]))
+
+        # I delete the review from the flagged_reviews table.
+        db.execute("DELETE FROM flagged_reviews WHERE id = ?", (review_id,))
+
+        # I commit the changes to the database.
+        db.commit()
+    except Exception as e:
+        # If an error occurs, I print the error message.
+        print(f"Error approving review: {e}")
+    finally:
+        # I ensure the database connection is closed, even if an error occurs.
+        db.close()
+
+    # I reload the flagged reviews to reflect the changes.
+    self.load_flagged_reviews()
+```
+### How It Works - Summary
+1. Data Retrieval: The function fetches the restaurant ID and review details from the flagged_reviews table.
+
+2. Review Approval: It inserts the review into the reviews table and deletes it from the flagged_reviews table.
+
+3. Error Handling: If an error occurs, it prints the error message.
+
+4. Resource Management: The database connection is closed in the finally block.
+
+5. UI Update: The flagged reviews are reloaded to reflect the changes.
+
+## References (Criteria C)
+- (https://uxwing.com/star-half-icon/)
+- (https://thenounproject.com/icon/full-star-687429/)
+- (https://www.flaticon.com/free-icon/empty-star_13595)
+- ChatGPT for generating sample data and information
+-   [Kivy Crash Course by Tech With Tim](https://www.youtube.com/watch?v=l8Imtec4ReQ)  
+-  [KivyMD Tutorial by Code With Stein](https://www.youtube.com/watch?v=ZQ8w1Vb0J6g)  
+-  [KivyMD Official Documentation](https://kivymd.readthedocs.io/en/latest/)  
+- [Kivy Popup Tutorial by CodersLegacy](https://coderslegacy.com/python/kivy-popup/)  
+-  [Real Python - Kivy Guide](https://realpython.com/mobile-app-kivy-python/)  
+- [Kivy Discord](https://discord.gg/kivy)  
+- [r/Kivy Subreddit](https://www.reddit.com/r/kivy/)  
+
+# Criteria D
+[VIDEO](https://drive.google.com/file/d/1FKDrEmS9MIMzgFyiMJR-zSRNpPpdlbhS/view?usp=sharing)
 
 ## Appendix
 Evidence of Consultation with Client:
