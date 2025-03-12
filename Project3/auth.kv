@@ -1,0 +1,1298 @@
+BoxLayout:
+    orientation: 'vertical'
+
+    ScreenManager:
+        id: screen_manager
+        WelcomeScreen
+        LoginScreen:
+        SignupScreen:
+        UserHomeScreen:
+        UserProfileScreen:
+        RestaurantDetailScreen:
+        RestaurantSignupScreen:
+        WaitingApprovalScreen:
+        RestaurantHomeScreen:
+        RestaurantInventoryScreen:
+        ProducerHomeScreen:
+        ModeratorFlaggedReviewsScreen:
+        ModeratorCriticismScreen:
+        ModeratorRestaurantApproval:
+        AdminDashboardScreen:
+
+<WelcomeScreen>:
+    name: 'welcome'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 50
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: 'TTlogo.png'
+            size_hint: (0.5, 0.2)
+            pos_hint: {'center_x': 0.5}
+
+        Label:
+            text: 'Welcome to TasteTogether!'
+            font_size: '24sp'
+            bold: True
+            color: 0.04, 0.08, 0.25, 1
+            size_hint_y: None
+            height: 50
+
+        Label:
+            text: ("Your ultimate platform for connecting food lovers, restaurants, and producers!\n\n""Here, you can:\n""- Discover new dishes and restaurants tailored to your taste.\n""- Share your honest reviews to help others, and rate others'.\n""- Earn Food Explorer Points and unlock exciting rewards.\n""- Collaborate with producers and restaurants to shape the future of food.\n\n""Let’s build a safe community where every bite tells a story!")
+            font_size: '14sp'
+            color: 0.04, 0.08, 0.25, 1
+            halign: 'left'
+            valign: 'top'
+            size_hint_y: None
+            height: self.texture_size[1]
+            text_size: self.width, None
+            padding: 10, 10
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 100
+            spacing: 0
+
+            MDCheckbox:
+                id: terms_checkbox
+                size_hint: None, None
+                size: 30, 30
+                pos_hint: {'center_y': 0.5}
+                on_active: root.toggle_terms_accepted(self, self.active)
+
+            Label:
+                text: 'I accept the [u][ref=terms]Terms and Conditions[/ref][/u]'
+                font_size: '14sp'
+                color: 0.04, 0.08, 0.25, 1
+                markup: True
+                size_hint_y: None
+                height: 30
+                pos_hint: {'center_y': 0.5}
+                on_ref_press: root.show_terms()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 20
+            MDButton:
+                style: "filled"
+                height: 50
+                radius: [15]
+                theme_width: "Custom"
+                size_hint_x: .8
+                md_bg_color: 0.96, 0.98, 0.92, 1
+                on_release: root.proceed_to_login()
+                pos_hint: {'center_x': 0.5}
+
+                MDButtonText:
+                    text: "LOG IN"
+                    theme_text_color: "Custom"
+                    text_color: 0.96, 0.98, 0.92, 1
+                    font_size: '16sp'
+                    bold: True
+                    pos_hint: {"center_x": .5, "center_y": .5}
+            MDButton:
+                style: "filled"
+                height: 50
+                radius: [15]
+                theme_width: "Custom"
+                size_hint_x: .8
+                md_bg_color: 0.96, 0.98, 0.92, 1
+                on_release: root.proceed_to_signup()
+                pos_hint: {'center_x': 0.5}
+
+                MDButtonText:
+                    text: "SIGN UP"
+                    theme_text_color: "Custom"
+                    text_color: 0.96, 0.98, 0.92, 1
+                    font_size: '16sp'
+                    bold: True
+                    pos_hint: {"center_x": .5, "center_y": .5}
+
+<LoginScreen>:
+    name: 'login'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 0.26, 0.45, 0.73, 1
+                on_release: root.manager.current = 'welcome'
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 30
+
+            Label:
+                text: "WELCOME BACK!"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Log in to existing account \n\n''Including User, Restaurant, Producer, or Moderator (set users)'
+                halign: 'center'
+                padding: '25sp'
+                font_size: '16sp'
+                color: 0.26, 0.45, 0.73, 1
+                size_hint_y: None
+                height: 30
+
+            Spinner:
+                id: role_spinner
+                spinner_color: 0.04, 0.08, 0.25, 1
+                text: 'User'
+                values: ['User', 'Restaurant', 'Producer', 'Moderator']
+                size_hint_y: None
+                height: 50
+                background_color: 1, 1, 1, 1
+                color: 0.04, 0.08, 0.25, 1
+
+            MDTextField:
+                id: uname
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: '25sp'
+                MDTextFieldHintText:
+                    text: "Username"
+                MDTextFieldMaxLengthText:
+                    max_text_length: 20
+
+            MDTextField:
+                id: passwd
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: 25
+                MDTextFieldHintText:
+                    text: "Password (min 8 characters)"
+
+            MDButton:
+                style: "filled"
+                height: 50
+                radius: [15]
+                theme_width: "Custom"
+                size_hint_x: .8
+                md_bg_color: 0.96, 0.98, 0.92, 1
+                on_release: root.try_login()
+                pos_hint: {'center_x': 0.5}
+
+                MDButtonText:
+                    text: "LOG IN"
+                    theme_text_color: "Custom"
+                    text_color: 0.96, 0.98, 0.92, 1
+                    font_size: '16sp'
+                    bold: True
+                    pos_hint: {"center_x": .5, "center_y": .5}
+
+            Label:
+                text: '[b]Need to create a new account?[/b] [u][ref=login]Sign up[/ref][/u]'
+                font_size: '14sp'
+                color: 0.26, 0.45, 0.73, 1
+                markup: True
+                size_hint_y: None
+                height: 30
+                on_ref_press: root.manager.current = 'signup'
+
+<SignupScreen>:
+    name: 'signup'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 0.26, 0.45, 0.73, 1
+                on_release: root.manager.current = 'welcome'
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 30
+
+            Label:
+                text: "WELCOME!"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Create a new account'
+                font_size: '16sp'
+                color: 0.26, 0.45, 0.73, 1
+                size_hint_y: None
+                height: 30
+
+            Spinner:
+                id: role_spinner
+                spinner_color: 0.04, 0.08, 0.25, 1
+                text: 'User'
+                values: ['User', 'Restaurant', 'Producer']
+                size_hint_y: None
+                height: 50
+                background_color: 1, 1, 1, 1
+                color: 0.04, 0.08, 0.25, 1
+
+            MDTextField:
+                id: uname
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: '25sp'
+                MDTextFieldHintText:
+                    text: "Username"
+                MDTextFieldMaxLengthText:
+                    max_text_length: 20
+
+            MDTextField:
+                id: email
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: 25
+                MDTextFieldHintText:
+                    text: "Email"
+
+            MDTextField:
+                id: passwd1
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: 25
+                MDTextFieldHintText:
+                    text: "Password (min 8 characters)"
+
+            MDTextField:
+                id: passwd2
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: 25
+                MDTextFieldHintText:
+                    text: "Confirm Password"
+
+            MDButton:
+                style: "filled"
+                height: 50
+                radius: [15]
+                theme_width: "Custom"
+                size_hint_x: .8
+                md_bg_color: 0.96, 0.98, 0.92, 1
+                on_release: root.try_register()
+                pos_hint: {'center_x': 0.5}
+
+                MDButtonText:
+                    text: "SIGN UP"
+                    theme_text_color: "Custom"
+                    text_color: 0.96, 0.98, 0.92, 1
+                    font_size: '16sp'
+                    bold: True
+                    pos_hint: {"center_x": .5, "center_y": .5}
+
+            Label:
+                text: '[b]Already have an account?[/b] [u][ref=login]Log in[/ref][/u]'
+                font_size: '14sp'
+                color: 0.26, 0.45, 0.73, 1
+                markup: True
+                size_hint_y: None
+                height: 30
+                on_ref_press: root.manager.current = 'login'
+
+<UserHomeScreen>:
+    name: 'Restaurants'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 20
+            spacing: 20
+            size_hint_y: None
+            height: 70
+
+            TextInput:
+                id: search_input
+                hint_text: "Search restaurants..."
+                size_hint_x: 0.7
+                size_hint_y: None
+                height: 50
+                on_text: root.filter_restaurants()
+
+            Spinner:
+                id: filter_spinner
+                spinner_color: 0.04, 0.08, 0.25, 1
+                text: 'Filter by'
+                values: ['Price', 'Rating', 'Recommended']
+                size_hint_x: 0.3
+                size_hint_y: None
+                height: 50
+                on_text: root.filter_restaurants()
+
+        ScrollView:
+            size_hint: (1, 1)
+            BoxLayout:
+                id: restaurant_list
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "home"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'Restaurants'
+
+            MDIconButton:
+                icon: "account"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'Profile'
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
+
+<UserProfileScreen>:
+    name: 'Profile'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        MDLabel:
+            id: username_label
+            text: "Username: "
+            font_size: "24sp"
+            bold: True
+            halign: "center"
+            color: 0, 0, 0, 1
+
+        MDLabel:
+            id: num_reviews_label
+            text: "Number of Reviews: "
+            font_size: "18sp"
+            halign: "center"
+            color: 0, 0, 0, 1
+
+        MDLabel:
+            id: like_dislike_label
+            text: "Like/Dislike Ratio: "
+            font_size: "18sp"
+            halign: "center"
+            color: 0, 0, 0, 1
+
+        MDLabel:
+            id: points_label
+            text: "Points: 0"
+            font_size: "18sp"
+            halign: "center"
+            color: 0, 0, 0, 1
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(5)
+            size_hint_y: None
+            height: dp(50)
+
+            MDLabel:
+                text: "Free Meal Progress (100 points):"
+                font_size: "16sp"
+                halign: "center"
+                color: 0, 0, 0, 1
+
+            ProgressBar:
+                id: free_meal_progress
+                max: 100
+                value: 0
+                size_hint_y: None
+                height: dp(20)
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            size_hint_y: None
+            height: dp(200)
+
+            MDLabel:
+                text: "Flavor Preferences:"
+                font_size: "20sp"
+                bold: True
+                halign: "center"
+                color: 0, 0, 0, 1
+
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                MDLabel:
+                    id: sweet_label
+                    text: "Sweet: 0.0%"
+                    font_size: "16sp"
+                    color: 0, 0, 0, 1
+                ProgressBar:
+                    value: root.get_taste_value(sweet_label.text)
+                    max: 100
+
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                MDLabel:
+                    id: salty_label
+                    text: "Salty: 0.0%"
+                    font_size: "16sp"
+                    color: 0, 0, 0, 1
+                ProgressBar:
+                    value: root.get_taste_value(salty_label.text)
+                    max: 100
+
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                MDLabel:
+                    id: sour_label
+                    text: "Sour: 0.0%"
+                    font_size: "16sp"
+                    color: 0, 0, 0, 1
+                ProgressBar:
+                    value: root.get_taste_value(sour_label.text)
+                    max: 100
+
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                MDLabel:
+                    id: bitter_label
+                    text: "Bitter: 0.0%"
+                    font_size: "16sp"
+                    color: 0, 0, 0, 1
+                ProgressBar:
+                    value: root.get_taste_value(bitter_label.text)
+                    max: 100
+
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                MDLabel:
+                    id: umami_label
+                    text: "Umami: 0.0%"
+                    font_size: "16sp"
+                    color: 0, 0, 0, 1
+                ProgressBar:
+                    value: root.get_taste_value(umami_label.text)
+                    max: 100
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "home"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'Restaurants'
+
+            MDIconButton:
+                icon: "account"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'Profile'
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
+
+<RestaurantDetailScreen>:
+    name: 'restaurant_detail'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: "250dp"
+            padding: 10
+            spacing: 10
+
+            Image:
+                id: restaurant_photo
+                source: ""
+                size_hint_y: None
+                height: "150dp"
+
+            Label:
+                id: restaurant_name
+                text: ""
+                font_size: "24sp"
+                bold: True
+                size_hint_y: None
+                height: "40dp"
+                color: (0, 0, 0, 1)
+
+            Label:
+                id: restaurant_description
+                text: ""
+                font_size: "16sp"
+                size_hint_y: None
+                height: "40dp"
+                color: (0, 0, 0, 1)
+
+            Label:
+                id: restaurant_rating
+                text: "Rating: 0.0"
+                font_size: "16sp"
+                size_hint_y: None
+                height: "40dp"
+                color: (0, 0, 0, 1)
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: "200dp"
+            padding: 10
+            spacing: 10
+
+            Label:
+                text: "Add Your Review"
+                font_size: "18sp"
+                bold: True
+                size_hint_y: None
+                height: "30dp"
+                color: (0, 0, 0, 1)
+
+            Spinner:
+                id: dish_spinner
+                spinner_color: 0.04, 0.08, 0.25, 1
+                text: "Select Dish"
+                size_hint_y: None
+                height: "40dp"
+
+            TextInput:
+                id: rating_input
+                hint_text: "Rating (1-5)"
+                size_hint_y: None
+                height: "40dp"
+
+            TextInput:
+                id: comment_input
+                hint_text: "Comment"
+                size_hint_y: None
+                height: "40dp"
+
+            Button:
+                text: "Submit Review"
+                size_hint_y: None
+                height: "40dp"
+                on_release: root.add_review()
+
+        ScrollView:
+            BoxLayout:
+                id: reviews_list
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: 10
+                spacing: 10
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 60
+            padding: 15
+            spacing: 10
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                pos_hint: {"center_x":.1, "center_y":.5}
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'Restaurants'
+
+<RestaurantSignupScreen>:
+    name: 'restaurant_register'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 0.26, 0.45, 0.73, 1
+                on_release: root.manager.current = 'welcome'
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 30
+
+            Label:
+                text: "REGISTER YOUR RESTAURANT DETAILS"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Your restaurant will need to be approved by a moderator after you register here'
+                font_size: '16sp'
+                color: 0.26, 0.45, 0.73, 1
+                size_hint_y: None
+                height: 30
+
+            MDTextField:
+                id: restaurant_name
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: '25sp'
+                MDTextFieldHintText:
+                    text: "Restaurant Name"
+
+            MDTextField:
+                id: restaurant_description
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: 25
+                MDTextFieldHintText:
+                    text: "Description"
+
+            MDTextField:
+                id: dishes
+                mode: "outlined"
+                size_hint_y: None
+                height: 50
+                pos_hint: {"center_x": .5, "center_y": .5}
+                background_color: 1, 1, 1, 1
+                foreground_color: 0.04, 0.08, 0.25, 1
+                padding: 25
+                MDTextFieldHintText:
+                    text: "Dishes (seperate by commas)"
+
+            MDButton:
+                style: "filled"
+                height: 50
+                radius: [15]
+                theme_width: "Custom"
+                size_hint_x: .8
+                md_bg_color: 0.96, 0.98, 0.92, 1
+                on_release: root.submit_restaurant()
+                pos_hint: {'center_x': 0.5}
+
+                MDButtonText:
+                    text: "SEND FOR APPROVAL"
+                    theme_text_color: "Custom"
+                    text_color: 0.96, 0.98, 0.92, 1
+                    font_size: '16sp'
+                    bold: True
+                    pos_hint: {"center_x": .5, "center_y": .5}
+
+<WaitingApprovalScreen>:
+    name: 'waiting_approval'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 200
+
+            Label:
+                text: "WAITING FOR APPROVAL"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Thank you for registering, your restaurant submission is pending approval by a moderator. \n\n''Please be patient and try logging in after 5 minutes!'
+                font_size: '14sp'
+                halign: 'center'
+                padding: '25sp'
+                color: 0.26, 0.45, 0.73, 1
+                size_hint_y: None
+                height: 30
+            MDButton:
+                style: "filled"
+                height: 50
+                radius: [15]
+                theme_width: "Custom"
+                size_hint_x: .8
+                md_bg_color: 0.96, 0.98, 0.92, 1
+                on_release: root.manager.current = 'login'
+                pos_hint: {'center_x': 0.5}
+
+                MDButtonText:
+                    text: "BACK TO LOGIN"
+                    theme_text_color: "Custom"
+                    text_color: 0.96, 0.98, 0.92, 1
+                    font_size: '16sp'
+                    bold: True
+                    pos_hint: {"center_x": .5, "center_y": .5}
+<RestaurantHomeScreen>:
+    name: 'restaurant_home_screen'
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 200
+            pos_hint: {'center_x': 0.5}
+            spacing: 20
+
+            Label:
+                id: restaurant_name
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+            Label:
+                id: restaurant_description
+                font_size: '14sp'
+                halign: 'center'
+                padding: 25
+                color: 0.26, 0.45, 0.73, 1
+                size_hint_y: None
+                height: 30
+
+            Label:
+                id: restaurant_rating
+                font_size: '16sp'
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+
+        ScrollView:
+            size_hint: (1, 1)
+            GridLayout:
+                id: reviews
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+                cols: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 60
+            padding: 10
+            spacing: 10
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "home"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'restaurant_home_screen'
+
+            MDIconButton:
+                icon: "dropbox"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'restaurant_inventory_screen'
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
+
+<RestaurantInventoryScreen>:
+    name: 'restaurant_inventory_screen'
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        ScrollView:
+            size_hint: (1, 1)
+            GridLayout:
+                id: inventory_list
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+                cols: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 60
+            padding: 10
+            spacing: 10
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "home"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'restaurant_home_screen'
+
+            MDIconButton:
+                icon: "dropbox"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'restaurant_inventory_screen'
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
+
+<ProducerHomeScreen>:
+    name: 'producer_home_screen'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            padding: 20
+            height: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 20
+
+            Label:
+                text: "REQUESTS FROM RESTAURANTS"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+        ScrollView:
+            size_hint: (1, 1)
+            GridLayout:
+                id: requests_list
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+                cols: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
+
+<ModeratorFlaggedReviewsScreen>:
+    name: 'moderator_flagged_reviews_screen'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 20
+
+            Label:
+                text: "AUTOMATICALLY FLAGGED REVIEWS"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+        ScrollView:
+            size_hint: (1, 1)
+            GridLayout:
+                id: flagged_reviews
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+                cols: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "comment-alert"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_flagged_reviews_screen'
+
+            MDIconButton:
+                icon: "comment-text"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_criticism_screen'
+
+            MDIconButton:
+                icon: "thumb-up"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_restaurant_approval'
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
+
+<ModeratorCriticismScreen>:
+    name: 'moderator_criticism_screen'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 20
+
+            Label:
+                text: "HELP RESTAURANTS UNDERSTAND REVIEWS"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+        ScrollView:
+            size_hint: (1, 1)
+            GridLayout:
+                id: criticism_reviews
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+                cols: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "comment-alert"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_flagged_reviews_screen'
+
+            MDIconButton:
+                icon: "comment-text"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_criticism_screen'
+
+            MDIconButton:
+                icon: "thumb-up"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_restaurant_approval'
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
+
+<ModeratorRestaurantApproval>:
+    name: 'moderator_restaurant_approval'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.98, 0.92, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.8, None)
+            height: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: 20
+
+            Label:
+                text: "REVIEW RESTAURANT REQUESTS"
+                font_size: '28sp'
+                bold: True
+                color: 0.04, 0.08, 0.25, 1
+                size_hint_y: None
+                height: 40
+
+        ScrollView:
+            size_hint: (1, 1)
+            GridLayout:
+                id: pending_restaurants
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+                cols: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 0.04, 0.08, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: "comment-alert"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_flagged_reviews_screen'
+
+            MDIconButton:
+                icon: "comment-more"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_criticism_screen'
+
+            MDIconButton:
+                icon: "thumb-up"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'moderator_restaurant_approval'
+
+            MDIconButton:
+                icon: "logout"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                on_release: root.manager.current = 'login'
