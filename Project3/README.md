@@ -38,14 +38,29 @@ Fig. 2, email from the client with approval
 
 Fig. 3, solution's hardware and software components and interactions
 
+## Flow Diagrams
+
+![Blank diagram (6)](https://github.com/user-attachments/assets/a54e8d8e-64d3-4ec6-a8d4-ebb255b728d0)
+
+Fig. 4, flow diagram for filter_restaurants
+
+![Blank diagram (8)](https://github.com/user-attachments/assets/a01d0984-7e9e-4fa5-89c9-9a34661cd519)
+
+Fig. 5, flow diagram for add_review (includes flow diagram for check_for_inappropriate_content)
+
+![Blank diagram (7)](https://github.com/user-attachments/assets/fb18d51b-4382-48fe-ab43-8972f9b802e9)
+
+Fig. 7, flow diagram for try_login
+
 ## Wireframe diagram
+
+
 
 ## UML Diagram
 
+
+
 ## ER Diagram
-
-## Flow Diagrams
-
 
 
 
@@ -104,8 +119,8 @@ Fig. , extract showing an example of how data is stored
 |------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
 | 1. Secure Multi-role login system| A secure authentication system will be implemented to ensure that users, restaurants, moderators, and producers have different access levels and functionalities. Each user type will have role-based access, ensuring secure data handling and preventing unauthorized actions.| 1. Run project.py 2. Find and check the terms and conditions box 3. Find and click SIGN UP button 4. Click on respective text box and enter a unique username (eg. Bob), valid email (eg. bob@hotmail.com), and a password at least 8 letters (eg. 12345678), then that same password again in confirm password (eg. 12345678) 5. Find DropDown menu and select a role (eg. User). 6. Find and click "Sign up". 7. Click on respective text box and enter the same details as in Sign up (eg. Bob for username, 12345678 for password) 8. Find DropDown menu and select the same role as in Sign up (eg. User) 9. Find and click Log in| User is registered, and the database stores the hashed password. Redirects to the login. Redirects to home screen. |
 | 2. Personalization | The platform will predict whether a user will enjoy a dish based on their taste profile and past reviews, improving recommendation accuracy and ensuring that feedback is relevant to the user’s preferences. | 1. Run project.py 2. Find and check the terms and conditions box. 3. Find and click LOG IN button. 4. Find and click respective text boxes to enter the folllowing information (past reviews and taste profile is needed for recommendation) Username: 1, Password: 12345678 5. Find and click LOG IN button 6. Find and click DropDown filters next to the search bar on the top of the screen. 7. Select rating 8. See restaurants and ranking 9. Find and click Dropdown filters again 10. Select recommended 11. See difference in restaurants and ranking. | Ranking based on user's previous reviews and taste profile from those reviews.|
-| 3. Moderation | An automated system with a blacklist will flag inappropriate reviews containing offensive language, spam, or misleading content, for the moderators to review and delete if necessary. | 1. Complete steps 1-9 from test 1 or 1-4 from test 2 (Username: Bob, Password: 12345678) if steps 1-9 from test 1 have already been tested 2. Find and select view details button of any restaurant (eg. Burger King). 3. Find and click dropdown dishes, select any (eg. Whopper) 4. Click on Rating text box, type a rating (eg. 2). 5. Click on Comment text box, type an inappropriate comment including swear words (eg. "Tastes like shit"). 6. Find and click Submit Review button. 7. Read Pop up dialogue. 8. Find and click back arrow button. 9. Find and click logout button. 10. Click on username text box and type "mod1" 11. Click on password text box and type "12345678". 12. Find and click LOG IN button. 13. Scroll down screen. 14. Find newly flagged review at the bottom. 15. Find and click delete button. | Review is not published, flagged, and sent to moderators for review. Moderator can view the flagged review and approve or delete it. |
-| 4. Review Management | Users can leave reviews for restaurants including dish name, rating, and comment. Restaurant owners can view categorized reviews for their restaurant. | 1. Complete steps 1-3 from test 3. 4. Click on Rating text box, type a rating (eg. 5). 5. Click on comment text box, type a comment (eg. "I really enjoyed the meal and atmosphere"). 6. Find and click Submit Review button. 7. Scroll down in Reviews box, and find newly added review. 8. Complete steps 8-9 from test 3. 10. Click on username text box and type "BurgerKing"
+| 3. Moderation | An automated system with a blacklist will flag inappropriate reviews containing offensive language, spam, or misleading content, for the moderators to review and delete if necessary. | 1. Complete steps 1-9 from test 1 or 1-4 from test 2 (Username: Bob, Password: 12345678) if steps 1-9 from test 1 have already been tested 2. Find and select view details button of any restaurant (eg. Burger King). 3. Find and click dropdown dishes, select any (eg. Whopper) 4. Click on Rating text box, type a rating (eg. 2). 5. Click on Comment text box, type an inappropriate comment including swear words (eg. "Tastes like shit"). 6. Find and click Submit Review button. 7. Read Pop up dialogue. 8. Find and click back arrow button. 9. Find and click logout button in bottom navigation. 10. Click on username text box and type "mod1" 11. Click on password text box and type "12345678". 12. Find and click LOG IN button. 13. Scroll down screen. 14. Find newly flagged review at the bottom. 15. Find and click delete button. | Review is not published, flagged, and sent to moderators for review. Moderator can view the flagged review and approve or delete it. |
+| 4. Review Management | Users can leave reviews for restaurants including dish name, rating, and comment. Restaurant owners can view categorized reviews for their restaurant. | 1. Complete steps 1-3 from test 3. 4. Click on Rating text box, type a rating (eg. 5). 5. Click on comment text box, type a comment (eg. "I really enjoyed the meal and atmosphere"). 6. Find and click Submit Review button. 7. Complete steps 8-12 from test 12. Find and click second item in the bottom navigation, "restaurant reviews". 13. Scroll down to find newly added review. 14. Click on button Helpful. 15. Find and click logout button in bottom navigation. 16. Find and click the username text box, type the name of the restaurant you added a review on in steps 1-6 (eg. BurgerKing). 17. Find and click the password text box, type the password "12345678". 18. Scroll to find newly added and categorized review. | Review is published including dish name, rating, and comment. Moderators can categorize reviews based on Helpful or Unhelpful traits. Restaurant owners can view all reviews left on their restaurant, with a comment from the Moderator about Helpfulness.|
 
 
 
