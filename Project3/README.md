@@ -20,9 +20,8 @@ I chose SQLite for data storage because it is lightweight, serverless, and cost-
 ## Success criteria
 [success criteria (2).pdf](https://github.com/user-attachments/files/19197099/success.criteria.2.pdf)
 
-**EVIDENCE OF APPROVAL
-**
-(Also included in Appendix)
+(See evidence of Consultation below and in Appendix)
+
 
 ![Screenshot 2025-03-11 005110](https://github.com/user-attachments/assets/c7657994-372c-42a0-bc80-05d5938cf052)
 
