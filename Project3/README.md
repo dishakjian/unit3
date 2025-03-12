@@ -32,6 +32,29 @@ Fig. 1, email to the client
 
 Fig. 2, email from the client with approval
 
+## References (for Criterion A)
+
+## References
+
+1. iFour Technolab. "Web App vs. Desktop App." [https://www.ifourtechnolab.com/blog/web-app-vs-desktop-app](https://www.ifourtechnolab.com/blog/web-app-vs-desktop-app#:~:text=Desktop%20apps%20usually%20offer%20better,you%20prioritize%20speed%20or%20convenience.)
+2. Built Bright. "Web vs. Desktop Applications: Pros and Cons." [https://builtbright.io/en/magazine/web-vs-desktop-applications-pros-and-cons/](https://builtbright.io/en/magazine/web-vs-desktop-applications-pros-and-cons/)
+3. Software Seni. "Identifying and Assessing Risks in Web and App Development." [https://www.softwareseni.com/identifying-and-assessing-risks-in-web-and-app-development/](https://www.softwareseni.com/identifying-and-assessing-risks-in-web-and-app-development/)
+4. Ruby Garage. "Risk Management in Development." [https://rubygarage.org/blog/risk-management-in-development](https://rubygarage.org/blog/risk-management-in-development)
+5. Serokell. "Python: Pros and Cons." [https://serokell.io/blog/python-pros-and-cons](https://serokell.io/blog/python-pros-and-cons)
+6. GeeksforGeeks. "Python Language Advantages & Applications." [https://www.geeksforgeeks.org/python-language-advantages-applications/](https://www.geeksforgeeks.org/python-language-advantages-applications/)
+7. SnapLogic. "Python vs Java Performance." [https://www.snaplogic.com/glossary/python-vs-java-performance](https://www.snaplogic.com/glossary/python-vs-java-performance)
+8. LSET. "Unveiling the Future of Python: Exploring the Latest Trends and Innovations in 2023 and Beyond." [https://lset.uk/blog/unveiling-the-future-of-python-exploring-the-latest-trends-and-innovations-in-2023-and-beyond/](https://lset.uk/blog/unveiling-the-future-of-python-exploring-the-latest-trends-and-innovations-in-2023-and-beyond/)
+9. JetBrains. "The Future of Data Science." [https://blog.jetbrains.com/pycharm/2023/10/future-of-data-science/](https://blog.jetbrains.com/pycharm/2023/10/future-of-data-science/)
+10. KivyMD Documentation. [https://kivymd.readthedocs.io/en/latest/](https://kivymd.readthedocs.io/en/latest/)
+11. Google Material Design. [https://m2.material.io/design/introduction/](https://m2.material.io/design/introduction/)
+12. Kivy. "Kivy: Open Source Python Library for Rapid Development." [https://kivy.org/#home](https://kivy.org/#home)
+13. Medium. "Python GUI Smackdown: Tkinter, PyQt, and Kivy." [https://medium.com/@qasim.coder/python-gui-smackdown-unleashing-the-power-of-tkinter-pyqt-and-kivy-e7b05d0e862](https://medium.com/@qasim.coder/python-gui-smackdown-unleashing-the-power-of-tkinter-pyqt-and-kivy-e7b05d0e862)
+14. SQLite. "Appropriate Uses for SQLite." [https://www.sqlite.org/whentouse.html](https://www.sqlite.org/whentouse.html)
+15. Epic Web Dev. "Why You Should Probably Be Using SQLite." [https://www.epicweb.dev/why-you-should-probably-be-using-sqlite](https://www.epicweb.dev/why-you-should-probably-be-using-sqlite)
+16. SQLite. "Short History of SQLite." [https://www.sqlite.org/aff_short.html](https://www.sqlite.org/aff_short.html)
+17. GreenGeeks. "SQLite vs MySQL." [https://www.greengeeks.com/blog/sqlite-vs-mysql](https://www.greengeeks.com/blog/sqlite-vs-mysql/#:~:text=Ultimately%2C%20SQLite%20is%20a%20lightweight,go%2Dto%20for%20RDBMS%20solutions.)
+
+
 # Criterion B
 ## Systems Diagram
 ![systemdiagramp3](https://github.com/user-attachments/assets/8d04a37c-fdb2-499a-8d6e-a81207d536f9)
