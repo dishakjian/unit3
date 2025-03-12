@@ -1,3 +1,6 @@
+# TasteTogether
+![Sad Sponge Bob GIF by SpongeBob SquarePants](https://github.com/user-attachments/assets/0c9d952c-ccd0-4e00-8712-473be488973d)
+
 # Criterion A
 ## Problem definition
 
