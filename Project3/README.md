@@ -23,16 +23,7 @@ I chose SQLite for data storage because it is lightweight, serverless, and cost-
 ## Success criteria
 [success criteria (2).pdf](https://github.com/user-attachments/files/19197099/success.criteria.2.pdf)
 
-(See evidence of Consultation below and in Appendix)
-
-
-![Screenshot 2025-03-11 005110](https://github.com/user-attachments/assets/c7657994-372c-42a0-bc80-05d5938cf052)
-
-Fig. 1, email to the client
-
-![Screenshot 2025-03-11 004911](https://github.com/user-attachments/assets/0eb28cb8-bd64-4a2c-b12c-f990edafd543)
-
-Fig. 2, email from the client with approval
+(See evidence of Approval in Appendix)
 
 ## References (for Criterion A)
 
@@ -59,52 +50,80 @@ Fig. 2, email from the client with approval
 ## Systems Diagram
 ![systemdiagramp3](https://github.com/user-attachments/assets/8d04a37c-fdb2-499a-8d6e-a81207d536f9)
 
-Fig. 3, solution's hardware and software components and interactions
+Fig. 1, solution's hardware and software components and interactions
 
 ## Flow Diagrams
 
 ![Blank diagram (6)](https://github.com/user-attachments/assets/a54e8d8e-64d3-4ec6-a8d4-ebb255b728d0)
 
-Fig. 4, flow diagram for filter_restaurants
+Fig. 2, flow diagram for filter_restaurants
 
 ![Blank diagram (8)](https://github.com/user-attachments/assets/a01d0984-7e9e-4fa5-89c9-9a34661cd519)
 
-Fig. 5, flow diagram for add_review (includes flow diagram for check_for_inappropriate_content)
+Fig. 3, flow diagram for add_review (includes flow diagram for check_for_inappropriate_content)
 
 ![Blank diagram (7)](https://github.com/user-attachments/assets/fb18d51b-4382-48fe-ab43-8972f9b802e9)
 
-Fig. 7, flow diagram for try_login
+Fig. 4, flow diagram for try_login
 
 ## Wireframe diagram
 
 ![Blank diagram (10)](https://github.com/user-attachments/assets/21530be2-fc6f-4269-bdee-c80ff421f384)
 
-Fig. 8, wireframe diagram for screen management and buttons
+Fig. 5, wireframe diagram for screen management and buttons
 
 ## UML Diagram
 
-![diagram1](https://github.com/user-attachments/assets/88127390-aa9b-47ba-ba82-cffc0040b63c)
+![Flowchart (6)](https://github.com/user-attachments/assets/343400d1-ddca-4ed8-a9e5-0f37a81a4c2f)
 
-Fig. 9, UML Diagram for project
+Fig. 6, UML Class Diagram for classes in project
 
 ## ER Diagram
 
 ![Blank diagram (9)](https://github.com/user-attachments/assets/8c54568c-473e-40dd-a91f-f2a04d282189)
 
-Fig. 10, detailing entity-relationships showing how entities relate to each other within the project system.
+Fig. 7, ER Diagram detailing entity-relationships (showing how entities relate to each other within the project system).
 
 ## Data Storage
 Tables in my SQL file
 
 ![image](https://github.com/user-attachments/assets/f0731882-50ea-4bf9-8e53-532d343266fe)
 
-Fig. 11, 10 tables in database (2 default)
+Fig. 8, 10 tables in database (2 default)
 
-Extract from one of the tables
+### Extracts of data storage in each table
+
+![image](https://github.com/user-attachments/assets/1f7b9355-a16e-4bf3-94c4-b92b42c19558)
+
+Fig. 9, Data storage in table dishes
+
+![image](https://github.com/user-attachments/assets/d2f3029d-7044-4b4d-b5e7-d838c69efe9e)
+
+Fig. 10, Data storage in flagged_reviews
+
+![image](https://github.com/user-attachments/assets/1c1db38b-d4d5-4009-939e-82280475c73c)
+
+Fig. 11, Data storage in inventory
+
+![image](https://github.com/user-attachments/assets/a2989da6-25a8-4085-9e0c-91824992080b)
+
+Fig. 12, Data storage in requests
+
+![image](https://github.com/user-attachments/assets/dae1a027-b078-4c42-822f-303f065f264e)
+
+Fig. 13, Data storage in restaurants
+
+![image](https://github.com/user-attachments/assets/5c1c6ac9-76ef-4473-b0a4-cb8c27bc5c19)
+
+Fig. 14, Data storage in reviews
 
 ![image](https://github.com/user-attachments/assets/30ed05a6-ceb2-48a9-93c6-4bfd5aa87445)
 
-Fig. 12, extract showing an example of how data is stored
+Fig. 15, Data storage in users
+
+![image](https://github.com/user-attachments/assets/4c7a6282-6154-4fa2-8c81-ec00db9852c7)
+
+Fig. 16, Data storage in user_taste_profiles
 
 ## Record of Tasks
 | Task No | Planned Action | Planned Outcome | Time Estimate (min) | Target Completion Date | Criteria |
@@ -154,117 +173,82 @@ Fig. 12, extract showing an example of how data is stored
 
 # Criterion C
 
-## LIST OF TECHNIQUES
-# Techniques Used in the Code
+## LIST OF TECHNIQUES  
 
----
+### 1. Database Management Techniques  
+- CRUD Operations  
+- Database Normalization  
+- Foreign Key Relationships  
+- Transaction Management  
+- Query Optimization  
 
-### 1. Database Management Techniques
-- CRUD Operations
-- Database Normalization
-- Foreign Key Relationships
-- Transaction Management
-- Query Optimization
+### 2. User Authentication and Authorization  
+- Password Hashing  
+- Role-Based Access Control (RBAC)  
+- Session Management  
 
----
+### 3. Data Filtering and Sorting  
+- Dynamic Filtering  
+- Custom Sorting Algorithms  
+- Search Functionality  
 
-### 2. User Authentication and Authorization
-- Password Hashing
-- Role-Based Access Control (RBAC)
-- Session Management
+### 4. Personalization and Recommendation Systems  
+- Taste Profiling  
+- Recommendation Scoring  
+- Dynamic UI Updates  
 
----
+### 5. Error Handling and Validation  
+- Input Validation  
+- Inappropriate Content Detection  
+- Error Popups  
+- Exception Handling  
 
-### 3. Data Filtering and Sorting
-- Dynamic Filtering
-- Custom Sorting Algorithms
-- Search Functionality
+### 6. Moderation and Flagging Systems  
+- Flagging Mechanism  
+- Approval/Rejection Workflow  
+- Audit Trail  
 
----
+### 7. UI/UX Design Techniques  
+- Dynamic Card Creation  
+- Interactive Widgets  
+- Progress Indicators  
+- Popup Dialogs  
 
-### 4. Personalization and Recommendation Systems
-- Taste Profiling
-- Recommendation Scoring
-- Dynamic UI Updates
+### 8. Data Aggregation and Reporting  
 
----
+### 9. Algorithm Design  
+- Weighted Scoring  
+- Randomization  
+- Sorting Algorithms  
 
-### 5. Error Handling and Validation
-- Input Validation
-- Inappropriate Content Detection
-- Error Popups
-- Exception Handling
+### 10. Security Techniques  
+- Data & Input Sanitization  
+- Role-Based Permissions  
 
----
+### 11. Code Organization and Modularity  
+- Reusable Components  
+- Comments and Documentation  
+- Database Abstraction  
 
-### 6. Moderation and Flagging Systems
-- Flagging Mechanism
-- Approval/Rejection Workflow
-- Audit Trail
+### 12. Testing and Debugging Techniques  
+- Debugging Statements  
+- Error Logging  
+- Validation Testing  
 
----
+### 13. User Feedback and Interaction  
+- Like/Dislike System  
+- Review Moderation Feedback  
+- Progress Tracking  
 
-### 7. UI/UX Design Techniques
-- Dynamic Card Creation
-- Interactive Widgets
-- Progress Indicators
-- Popup Dialogs
+### 14. Data Visualization  
 
----
+### 15. Event-Driven Programming  
+- Button Click Handling  
+- Screen Transition Handling  
 
-### 8. Data Aggregation and Reporting
-
----
-
-### 9. Algorithm Design
-- Weighted Scoring
-- Randomization
-- Sorting Algorithms
-
----
-
-### 10. Security Techniques
-- Data Sanitization
-- Input Sanitization
-- Role-Based Permissions
-
----
-
-### 11. Code Organization and Modularity
-- Reusable Components
-- Comments and Organization
-- Database Abstraction
-
----
-
-### 12. Testing and Debugging Techniques
-- Debugging Statements
-- Error Logging
-- Input Validation Testing
-
----
-
-### 13. User Feedback and Interaction
-- Like/Dislike System
-- Review Moderation Feedback
-- Progress Tracking
-
----
-
-### 14. Data Visualization
-
----
-
-### 15. Event-Driven Programming
-- Button Click Handling
-- Screen Transition Handling
-- Dynamic UI Updates
-
----
-
-### 16. Data Persistence
-- Local Database Storage
-- Session Persistence
+### 16. Data Persistence  
+- Local Database Storage  
+- Session Persistence  
 
 
 ## Filter Restaurants function
@@ -851,9 +835,15 @@ def approve_review(self, review_id):
 Evidence of Consultation with Client:
 
 ![image](https://github.com/user-attachments/assets/f2383c4f-99c1-4078-92ec-1bfda717c592)
-Evidence of Confirmation of Success Criteria
+
+Fig. 16, Evidence of Confirmation of Success Criteria
 
 ![Screenshot 2025-03-11 005110](https://github.com/user-attachments/assets/57aec91a-5865-4cde-ad05-7be885a57c4c)
 
+Fig. 17, email to the client
+
 ![Screenshot 2025-03-11 004911](https://github.com/user-attachments/assets/17fd3da9-480e-4575-81ad-a20f672749e2)
+
+Fig. 18, email from the client with approval
+
 
