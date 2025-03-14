@@ -251,202 +251,257 @@ Fig. 16, Data storage in user_taste_profiles
 - Session Persistence  
 
 
-## Filter Restaurants function
-This function is responsible for filtering and sorting restaurants based on user preferences and displaying them in a user-friendly format. It handles three main filtering options: Price, Rating, and Recommended. The Recommended filter uses the user's taste profile to calculate a personalized recommendation score for each restaurant. Additionally, it supports a search query to filter restaurants by name or description.
+## Filter Restaurants and Calculate Restaurant Taste Profiles function
+When I first started building the filter and sorting functionality for the restaurant app, I wanted a system where users could easily sort restaurants by different criteria, such as price, rating, and personalized recommendations. Initially, my code structure was simple, and the filtering mechanism seemed to work well for basic cases, but soon enough, I encountered issues when trying to integrate more complex features, like the personalized recommendations based on user taste profiles.
+
+At first, I simply implemented a function that retrieved restaurant data, sorted it by price or rating, and displayed it. But as I added the "Recommended" filter that needed to account for user preferences, things got more complicated. The recommendation system required matching the user's taste profile (sweet, salty, sour, bitter, umami) with each restaurant's corresponding profile. The challenge wasn't just about getting the data; it was about making sure the sorting was done dynamically based on the user's unique taste profile.
+
+My initial approach was a bit naive. I thought I could simply calculate a recommendation score using the taste profiles and display the results. However, when I tested it, I realized that the sorting and filtering were not efficient and would often break if any restaurant didn't have a taste profile or if the user's profile was incomplete. The solution didn’t come to me immediately, and I found myself stuck for a while, unsure of how to handle missing or incomplete data.
+
+Initial code and idea
+```.py
+# Get the filter type from the user’s choice
+filter_type = self.ids.filter_spinner.text
+
+# Retrieve the search query, convert it to lowercase for case-insensitive matching
+search_query = self.ids.search_input.text.lower()
+
+# Open database connection and fetch restaurant data
+db = DatabaseManager('project.sql')
+query = "SELECT id, name, description, rating, price, photo FROM restaurants"
+restaurants = db.search(query)
+db.close()
+```
+At this point, the code was working well for basic sorting of price and rating. However, when I added the recommendation system, I quickly ran into issues.
+
+I had initially attempted to implement the "Recommended" sorting feature by simply comparing user preferences with restaurant taste profiles, but I found that it wasn’t handling missing values properly. Additionally, my logic for dynamically updating the recommendations was flawed, as I wasn’t handling cases where a restaurant didn’t have any taste profile data. This caused the code to break when trying to calculate recommendation scores.
+
+After a bit of trial and error, I realized that I needed to approach this problem differently. I spent a few hours reading through relevant resources on StackOverflow and watching YouTube tutorials.
+
+I returned to the code with this new knowledge and decided to refactor the recommendation logic:
 
 ```.py
 def filter_restaurants(self):
-    # I start by retrieving the filter type selected by the user from the filter_spinner widget.
+    # Retrieve the selected filter type from the dropdown menu (filter_spinner widget)
     filter_type = self.ids.filter_spinner.text
 
-    # I also get the search query entered by the user from the search_input widget and convert it to lowercase for case-insensitive matching.
+    # Retrieve the search query entered by the user, converting it to lowercase for case-insensitive comparison
     search_query = self.ids.search_input.text.lower()
 
-    # I open a connection to the SQLite database using the DatabaseManager class to fetch restaurant data.
+    # Open a connection to the SQLite database using DatabaseManager
     db = DatabaseManager('project.sql')
 
-    # I define a SQL query to select all restaurants' details: id, name, description, rating, price, and photo.
+    # Define an SQL query to fetch restaurant details (id, name, description, rating, price, and photo)
     query = "SELECT id, name, description, rating, price, photo FROM restaurants"
-
-    # I execute the query and store the results in the `restaurants` variable, which will contain a list of tuples.
+    
+    # Execute the query and store the results in a list of tuples
     restaurants = db.search(query)
 
-    # I close the database connection to free up resources and avoid potential memory leaks.
+    # Close the database connection to prevent memory leaks and ensure efficiency
     db.close()
 
-    # I print the number of restaurants found to the console for debugging purposes.
+    # Print the number of restaurants retrieved for debugging purposes
     print(f"Found {len(restaurants)} restaurants.")
 
-    # I clear the existing restaurant cards from the restaurant_list widget to prepare for displaying the filtered results.
+    # Clear existing restaurant cards from the restaurant_list widget before displaying new results
     self.ids.restaurant_list.clear_widgets()
 
-    # I check the filter type selected by the user to determine how to sort the restaurants.
+    # Check which filter type is selected and sort restaurants accordingly
     if filter_type == 'Price':
-        # If the filter type is 'Price', I sort the restaurants by their price. 
-        # The price is represented by the number of '¥' symbols in the 4th index of the tuple.
-        # If the price is None, I default it to 0 to avoid errors during sorting.
+        # Sort restaurants by price (assumed to be stored as an integer or None)
+        # If price is None, default to 0 to avoid errors during sorting
         restaurants.sort(key=lambda x: x[4] if x[4] is not None else 0)
     elif filter_type == 'Rating':
-        # If the filter type is 'Rating', I sort the restaurants by their rating.
-        # The rating is in the 3rd index of the tuple. If it's None, I default it to 0.
-        # I sort in descending order (reverse=True) so higher-rated restaurants appear first.
+        # Sort restaurants by rating in descending order (higher ratings first)
+        # Default rating to 0 if None to avoid sorting errors
         restaurants.sort(key=lambda x: x[3] if x[3] is not None else 0, reverse=True)
     elif filter_type == 'Recommended':
-        # If the filter type is 'Recommended', I need to calculate a recommendation score for each restaurant based on the user's taste profile.
-        # I reopen the database connection to fetch the user's taste profile.
+        # If filtering by recommendation, retrieve the user's taste profile
         db = DatabaseManager('project.sql')
-
-        # I query the database to get the user's ID using their username stored in LoginScreen.current_username.
+        
+        # Fetch user ID based on the currently logged-in username
         user_id = db.search("SELECT id FROM users WHERE username = ?", (LoginScreen.current_username,))[0][0]
 
-        # I fetch the user's taste profile (sweet, salty, sour, bitter, umami) from the user_taste_profiles table.
+        # Retrieve the user's taste profile from the database
         user_taste_profile = db.search(
-            "SELECT sweet, salty, sour, bitter, umami FROM user_taste_profiles WHERE user_id = ?",
-            (user_id,))
+            "SELECT sweet, salty, sour, bitter, umami FROM user_taste_profiles WHERE user_id = ?", (user_id,))
         
-        # I close the database connection after fetching the data.
+        # Close the database connection after fetching the data
         db.close()
 
-        # If the user has a taste profile, I proceed to calculate recommendation scores for each restaurant.
+        # If the user has a taste profile, proceed with calculating recommendation scores
         if user_taste_profile:
-            # I unpack the taste profile values into individual variables for easier calculation.
             user_sweet, user_salty, user_sour, user_bitter, user_umami = user_taste_profile[0]
-
-            # I iterate over each restaurant to calculate its recommendation score.
+            
+            # Iterate over each restaurant to compute recommendation scores
             for i, restaurant in enumerate(restaurants):
-                # I get the restaurant's ID from the first element of the tuple.
-                restaurant_id = restaurant[0]
-
-                # I calculate the restaurant's taste profile by calling the `calculate_restaurant_taste_profile` method.
+                restaurant_id = restaurant[0]  # Extract restaurant ID
+                
+                # Compute the restaurant's taste profile
                 restaurant_taste_profile = self.calculate_restaurant_taste_profile(restaurant_id)
-
-                # If the restaurant has no taste profile, I append a default score of 0.0 and skip further calculations.
+                
+                # If no taste profile exists, set recommendation score to 0
                 if not restaurant_taste_profile:
-                    # I convert the tuple to a list to append the score, then convert it back to a tuple.
                     restaurant = list(restaurant)
                     restaurant.append(0.0)
                     restaurants[i] = tuple(restaurant)
                     continue
 
-                # I calculate the recommendation score by multiplying the user's taste preferences with the restaurant's taste profile.
+                # Compute the recommendation score using the user's taste preferences
                 recommendation_score = (
-                        user_sweet * restaurant_taste_profile["sweet"] +
-                        user_salty * restaurant_taste_profile["salty"] +
-                        user_sour * restaurant_taste_profile["sour"] +
-                        user_bitter * restaurant_taste_profile["bitter"] +
-                        user_umami * restaurant_taste_profile["umami"]
+                    user_sweet * restaurant_taste_profile["sweet"] +
+                    user_salty * restaurant_taste_profile["salty"] +
+                    user_sour * restaurant_taste_profile["sour"] +
+                    user_bitter * restaurant_taste_profile["bitter"] +
+                    user_umami * restaurant_taste_profile["umami"]
                 )
-
-                # I append the recommendation score to the restaurant tuple by converting it to a list, appending the score, and converting it back to a tuple.
+                
+                # Append recommendation score to restaurant tuple
                 restaurant = list(restaurant)
                 restaurant.append(recommendation_score)
                 restaurants[i] = tuple(restaurant)
 
-            # I sort the restaurants by their recommendation score in descending order so the most recommended restaurants appear first.
+            # Sort restaurants by recommendation score in descending order
             restaurants.sort(key=lambda x: x[-1], reverse=True)
-
-    # I filter the restaurants based on the search query entered by the user.
+    
+    # Filter restaurants based on the search query
     filtered_restaurants = []
     for restaurant in restaurants:
-        # I unpack the restaurant tuple into individual variables for easier access.
         restaurant_id, name, description, rating, price, photo, *rest = restaurant
-
-        # I check if the search query is empty or if it matches the restaurant's name or description (case-insensitive).
+        
+        # Check if search query matches the restaurant's name or description
         if not search_query or search_query in name.lower() or search_query in description.lower():
-            # If the restaurant matches the search query, I add it to the filtered_restaurants list.
             filtered_restaurants.append(restaurant)
-
-    # I iterate over the filtered restaurants to create and display a card for each one.
+    
+    # Create and display a card for each filtered restaurant
     for restaurant in filtered_restaurants:
-        # I unpack the restaurant tuple again for clarity.
         restaurant_id, name, description, rating, price, photo, *rest = restaurant
+        price = price if price is not None else 3  # Set default price if None
+        
+        print(f"Creating card for: {name}")  # Debugging output
 
-        # I set a default price of 3 if the price is None.
-        price = price if price is not None else 3
-
-        # I print the restaurant's name to the console for debugging purposes.
-        print(f"Creating card for: {name}")
-
-        # I create a new MDCard widget to display the restaurant's details.
-        card = MDCard(
-            orientation="vertical",
-            size_hint=(1, None),
-            height="180dp",
-            elevation=4,
-            padding=10,
-            spacing=10,
-            md_bg_color=(1, 1, 1, 1))
-
-        # I create a horizontal BoxLayout to hold the restaurant's name, rating, and price.
+        # Create a card widget for the restaurant
+        card = MDCard(orientation="vertical", size_hint=(1, None), height="180dp", elevation=4, padding=10, spacing=10, md_bg_color=(1, 1, 1, 1))
+        
+        # Create a layout for restaurant name, rating, and price
         title_box = BoxLayout(orientation='horizontal', size_hint_y=None, height="40dp")
-
-        # I create a Label widget to display the restaurant's name.
-        title_label = Label(
-            text=name,
-            font_size="18sp",
-            bold=True,
-            size_hint_x=0.6,
-            color=(0, 0, 0, 1))
-
-        # I create another horizontal BoxLayout to display the star rating.
+        title_label = Label(text=name, font_size="18sp", bold=True, size_hint_x=0.6, color=(0, 0, 0, 1))
         rating_box = BoxLayout(orientation='horizontal', size_hint_x=0.2, spacing=5)
-
-        # I calculate the number of full stars, half stars, and empty stars based on the restaurant's rating.
-        rating = rating if rating is not None else 0  # Default to 0 if rating is None
+        
+        # Compute number of full, half, and empty stars based on rating
+        rating = rating if rating is not None else 0
         full_stars = int(rating)
         half_star = 1 if (rating - full_stars) >= 0.5 else 0
         empty_stars = 5 - full_stars - half_star
-
-        # I add full star images to the rating_box.
+        
+        # Add star images to rating box
         for _ in range(full_stars):
             rating_box.add_widget(Image(source='fullstar.png', size_hint=(None, None), size=(20, 20)))
-
-        # I add a half star image if applicable.
         if half_star:
             rating_box.add_widget(Image(source='star-half-icon.png', size_hint=(None, None), size=(20, 20)))
-
-        # I add empty star images to fill the remaining space.
         for _ in range(empty_stars):
             rating_box.add_widget(Image(source='emptystar.png', size_hint=(None, None), size=(20, 20)))
-
-        # I create a Label widget to display the restaurant's price.
-        price_label = Label(
-            text=f"¥{'¥' * price}",
-            font_size="16sp",
-            size_hint_x=0.2,
-            color=(0, 0, 0, 1))
-
-        # I add the title_label, rating_box, and price_label to the title_box.
+        
+        price_label = Label(text=f"¥{'¥' * price}", font_size="16sp", size_hint_x=0.2, color=(0, 0, 0, 1))
+        
         title_box.add_widget(title_label)
         title_box.add_widget(rating_box)
         title_box.add_widget(price_label)
-
-        # I create a Label widget to display the restaurant's description.
-        description_label = Label(
-            text=description,
-            font_size="14sp",
-            size_hint_y=None,
-            height="60dp",
-            color=(0, 0, 0, 1))
-
-        # I create a Button widget to allow the user to view more details about the restaurant.
-        details_button = Button(
-            text="View Details",
-            size_hint_y=None,
-            height="40dp",
-            on_release=lambda btn, rid=restaurant_id: self.view_restaurant(rid))
-
-        # I add the title_box, description_label, and details_button to the card.
+        
+        description_label = Label(text=description, font_size="14sp", size_hint_y=None, height="60dp", color=(0, 0, 0, 1))
+        details_button = Button(text="View Details", size_hint_y=None, height="40dp", on_release=lambda btn, rid=restaurant_id: self.view_restaurant(rid))
+        
         card.add_widget(title_box)
         card.add_widget(description_label)
         card.add_widget(details_button)
-
-        # I add the card to the restaurant_list widget to display it on the screen.
         self.ids.restaurant_list.add_widget(card)
+        
+        print(f"Added card for: {name}")  # Debugging output
 
-        # I print the restaurant's name to the console to confirm the card was added.
-        print(f"Added card for: {name}")
+
+def calculate_restaurant_taste_profile(self, restaurant_id):
+    """
+    Calculates the average taste profile for a restaurant based on the dishes in its reviews.
+    Each dish is associated with taste attributes (sweet, salty, sour, bitter, umami), 
+    and this function aggregates those values to generate a taste profile for the restaurant.
+
+    Parameters:
+    - restaurant_id (int): The unique ID of the restaurant whose taste profile is being calculated.
+
+    Returns:
+    - dict: A dictionary containing the averaged taste profile values for the restaurant.
+    """
+    
+    # Establish a connection to the database to retrieve relevant dish taste data.
+    db = DatabaseManager('project.sql')
+
+    try:
+        # SQL query to retrieve taste attributes for all dishes reviewed at the given restaurant.
+        # It joins the `reviews` table (which contains restaurant reviews) with the `dishes` table
+        # (which holds taste attributes for individual dishes) based on dish ID.
+        query = """
+        SELECT d.sweet, d.salty, d.sour, d.bitter, d.umami
+        FROM reviews r
+        JOIN dishes d ON r.dish = d.id
+        WHERE r.restaurant_id = ?
+        """
+
+        # Execute the query and store the resulting list of tuples, where each tuple contains
+        # the taste profile values of a dish associated with the restaurant.
+        dish_taste_profiles = db.search(query, (restaurant_id,))
+
+        # If no dishes are found for the restaurant, return a default neutral taste profile (all values set to 0).
+        if not dish_taste_profiles:
+            return {
+                "sweet": 0,
+                "salty": 0,
+                "sour": 0,
+                "bitter": 0,
+                "umami": 0,
+            }
+
+        # Initialize an empty taste profile dictionary to store the cumulative taste attributes.
+        taste_profile = {"sweet": 0, "salty": 0, "sour": 0, "bitter": 0, "umami": 0}
+
+        # Loop through each dish's taste profile and accumulate the values into the taste_profile dictionary.
+        for dish in dish_taste_profiles:
+            sweet, salty, sour, bitter, umami = dish  # Unpack taste values from the tuple.
+            taste_profile["sweet"] += sweet
+            taste_profile["salty"] += salty
+            taste_profile["sour"] += sour
+            taste_profile["bitter"] += bitter
+            taste_profile["umami"] += umami
+
+        # Calculate the number of dishes retrieved, which will be used for averaging the values.
+        num_dishes = len(dish_taste_profiles)
+
+        # Normalize the cumulative taste values by dividing each by the number of dishes,
+        # ensuring the final taste profile represents an average rather than a sum.
+        for key in taste_profile:
+            taste_profile[key] /= num_dishes
+
+        # Return the final averaged taste profile for the restaurant.
+        return taste_profile
+
+    except Exception as e:
+        # If an error occurs (e.g., database connection failure or malformed query),
+        # print the error message for debugging and return a default neutral taste profile.
+        print(f"Error calculating taste profile: {e}")
+        return {
+            "sweet": 0,
+            "salty": 0,
+            "sour": 0,
+            "bitter": 0,
+            "umami": 0,
+        }
+
+    finally:
+        # Ensure the database connection is closed to prevent memory leaks or locked resources.
+        db.close()
+
 ```
+This time, the recommendation system and calculating the taste profile was much more robust, and could handle different cases and amount of information, making up for the lack of information when needed.
+
 
 ### How It Works - Summary
 
@@ -468,71 +523,6 @@ def filter_restaurants(self):
 ## Calculate Restaurant Taste Profile Function
 This function calculates the taste profile of a restaurant based on the dishes in its reviews. The taste profile is used to provide personalized recommendations to users based on their taste preferences.
 
-```.py
-def calculate_restaurant_taste_profile(self, restaurant_id):
-    """
-    I calculate the taste profile for a restaurant based on the dishes in its reviews.
-    """
-    # I open a connection to the SQLite database using the DatabaseManager class.
-    db = DatabaseManager('project.sql')
-    try:
-        # I define a SQL query to fetch the taste profiles of all dishes associated with the restaurant's reviews.
-        query = """
-        SELECT d.sweet, d.salty, d.sour, d.bitter, d.umami
-        FROM reviews r
-        JOIN dishes d ON r.dish = d.id
-        WHERE r.restaurant_id = ?
-        """
-        # I execute the query and store the results in the `dish_taste_profiles` variable.
-        dish_taste_profiles = db.search(query, (restaurant_id,))
-
-        # If no dishes are found, I return a default taste profile with all values set to 0.
-        if not dish_taste_profiles:
-            return {
-                "sweet": 0,
-                "salty": 0,
-                "sour": 0,
-                "bitter": 0,
-                "umami": 0,
-            }
-
-        # I initialize a dictionary to store the cumulative taste profile.
-        taste_profile = {"sweet": 0, "salty": 0, "sour": 0, "bitter": 0, "umami": 0}
-
-        # I iterate over each dish's taste profile to calculate the cumulative taste profile.
-        for dish in dish_taste_profiles:
-            # I unpack the taste attributes for the current dish.
-            sweet, salty, sour, bitter, umami = dish
-
-            # I add each taste attribute to the cumulative taste profile.
-            taste_profile["sweet"] += sweet
-            taste_profile["salty"] += salty
-            taste_profile["sour"] += sour
-            taste_profile["bitter"] += bitter
-            taste_profile["umami"] += umami
-
-        # I normalize the taste profile by dividing each attribute by the number of dishes.
-        num_dishes = len(dish_taste_profiles)
-        for key in taste_profile:
-            taste_profile[key] /= num_dishes
-
-        # I return the normalized taste profile.
-        return taste_profile
-
-    except Exception as e:
-        # If an error occurs, I print the error message and return a default taste profile.
-        print(f"Error calculating taste profile: {e}")
-        return {
-            "sweet": 0,
-            "salty": 0,
-            "sour": 0,
-            "bitter": 0,
-            "umami": 0,
-        }
-    finally:
-        # I ensure the database connection is closed, even if an error occurs.
-        db.close()
-```
 ### How It Works - Summary
 1. Data Retrieval: The function queries the database to fetch the taste profiles of all dishes associated with the restaurant's reviews.
 
@@ -545,6 +535,7 @@ def calculate_restaurant_taste_profile(self, restaurant_id):
 5. Error Handling: If an error occurs, it prints the error message and returns a default taste profile.
 
 6. Resource Management: The database connection is closed in the finally block to ensure proper resource management.
+
 
 ## Try Login Function
 This function handles user login by validating the username, password, and role entered by the user. It also checks if a restaurant user is approved before allowing access.
